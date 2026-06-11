@@ -50,6 +50,66 @@
         display: none !important;
       }
 
+      .sound-dock {
+        position: fixed;
+        right: 14px;
+        bottom: 14px;
+        z-index: 50;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 12px;
+        background: rgba(7, 14, 28, 0.92);
+        border: 3px solid rgba(255, 255, 255, 0.82);
+        box-shadow: 0 14px 32px rgba(0, 0, 0, 0.38);
+        backdrop-filter: blur(8px);
+      }
+
+      .sound-toggle {
+        width: 52px;
+        height: 52px;
+        border: 3px solid #0f1930;
+        background: #ffcc29;
+        color: #08101f;
+        font-size: 28px;
+        line-height: 1;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.24);
+      }
+
+      .sound-toggle.is-muted {
+        background: #5d6b8d;
+        color: #ffffff;
+      }
+
+      .sound-controls {
+        min-width: 152px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .sound-label {
+        font-size: 12px;
+        font-weight: 900;
+        letter-spacing: 0.6px;
+        color: #f8fbff;
+      }
+
+      .sound-range {
+        width: 100%;
+        accent-color: #ffcc29;
+        cursor: pointer;
+      }
+
+      .sound-value {
+        font-size: 12px;
+        color: #d7def4;
+      }
+
       .hero {
         text-align: center;
         margin-bottom: 18px;
@@ -1828,6 +1888,23 @@
         .choice-btn {
           min-height: 72px;
         }
+
+        .sound-dock {
+          right: 10px;
+          bottom: 10px;
+          gap: 8px;
+          padding: 8px 10px;
+        }
+
+        .sound-toggle {
+          width: 46px;
+          height: 46px;
+          font-size: 24px;
+        }
+
+        .sound-controls {
+          min-width: 132px;
+        }
       }
     </style>
   </head>
@@ -1915,7 +1992,7 @@
       <section id="battleScreen" class="hidden">
         <div class="battle-screen">
           <div class="top-bar">
-            <div class="mini-panel" id="progressPanel">第 1 / 20 題</div>
+            <div class="mini-panel" id="progressPanel">道場戰鬥</div>
             <div class="mini-panel" id="scorePanel">徽章 0</div>
           </div>
 
@@ -1989,6 +2066,15 @@
           <button class="secondary-btn" id="chooseAnotherBtn">再睇其他精靈球</button>
           <button class="primary-btn" id="confirmPokemonBtn">開始冒險</button>
         </div>
+      </div>
+    </div>
+
+    <div class="sound-dock" aria-label="音量控制">
+      <button class="sound-toggle" id="soundToggleBtn" type="button" aria-label="靜音">🔊</button>
+      <div class="sound-controls">
+        <div class="sound-label">音量控制</div>
+        <input class="sound-range" id="soundRange" type="range" min="0" max="100" step="1" value="70" aria-label="調整音量">
+        <div class="sound-value" id="soundValue">70%</div>
       </div>
     </div>
 
@@ -2216,6 +2302,9 @@
       const resultText = document.getElementById("resultText");
       const playAgainBtn = document.getElementById("playAgainBtn");
       const backToSelectionBtn = document.getElementById("backToSelectionBtn");
+      const soundToggleBtn = document.getElementById("soundToggleBtn");
+      const soundRange = document.getElementById("soundRange");
+      const soundValue = document.getElementById("soundValue");
 
       function randomItem(list) {
         return list[Math.floor(Math.random() * list.length)];
@@ -2234,16 +2323,50 @@
         battle: new Audio("./assets/audio/battle-bgm.ogg")
       };
       const uiSelectSound = new Audio("./assets/audio/menu-select.wav");
+      const baseMusicVolumes = {
+        ui: 0.24,
+        battle: 0.12
+      };
+      const baseUiSelectVolume = 0.3;
+      const audioSettings = {
+        volume: Math.min(1, Math.max(0, Number(localStorage.getItem("pokemon-k2-volume") || "0.7"))),
+        muted: localStorage.getItem("pokemon-k2-muted") === "1"
+      };
       Object.values(musicPlayers).forEach((audio) => {
         audio.loop = true;
         audio.preload = "auto";
-        audio.volume = 0.24;
       });
-      musicPlayers.battle.volume = 0.12;
       uiSelectSound.preload = "auto";
-      uiSelectSound.volume = 0.3;
       let currentMusicKey = null;
       let battleReturnTimer = null;
+
+      function getEffectiveVolume() {
+        return audioSettings.muted ? 0 : audioSettings.volume;
+      }
+
+      function updateSoundUi() {
+        const percent = Math.round(audioSettings.volume * 100);
+        soundRange.value = String(percent);
+        soundValue.textContent = audioSettings.muted ? `已靜音 (${percent}%)` : `${percent}%`;
+        soundToggleBtn.textContent = audioSettings.muted || percent === 0 ? "🔇" : (percent < 45 ? "🔉" : "🔊");
+        soundToggleBtn.classList.toggle("is-muted", audioSettings.muted || percent === 0);
+      }
+
+      function applyAudioLevels() {
+        const effective = getEffectiveVolume();
+        musicPlayers.ui.volume = baseMusicVolumes.ui * effective;
+        musicPlayers.battle.volume = baseMusicVolumes.battle * effective;
+        uiSelectSound.volume = baseUiSelectVolume * effective;
+        if (audioContextMasterGain && audioContext) {
+          audioContextMasterGain.gain.setValueAtTime(Math.max(0.0001, effective), audioContext.currentTime);
+        }
+        updateSoundUi();
+      }
+
+      function saveAudioSettings() {
+        localStorage.setItem("pokemon-k2-volume", String(audioSettings.volume));
+        localStorage.setItem("pokemon-k2-muted", audioSettings.muted ? "1" : "0");
+      }
 
       function getMusicKeyForScreen(screen) {
         if (screen === coverScreen || screen === selectionScreen || screen === mapScreen) return "ui";
@@ -2265,9 +2388,9 @@
         active.play().catch(() => {});
       }
 
-      function syncScreenMusic(screen) {
+      function syncScreenMusic(screen, forceRestart = false) {
         const nextKey = getMusicKeyForScreen(screen);
-        if (currentMusicKey === nextKey) return;
+        if (currentMusicKey === nextKey && !forceRestart) return;
         stopAllMusic(nextKey);
         currentMusicKey = nextKey;
         if (!nextKey) return;
@@ -2282,14 +2405,23 @@
       }
 
       let audioContext = null;
+      let audioContextMasterGain = null;
 
       function ensureAudioContext() {
         const AudioCtor = window.AudioContext || window.webkitAudioContext;
         if (!AudioCtor) return null;
         if (!audioContext) audioContext = new AudioCtor();
+        if (!audioContextMasterGain) {
+          audioContextMasterGain = audioContext.createGain();
+          audioContextMasterGain.connect(audioContext.destination);
+        }
         if (audioContext.state === "suspended") {
           audioContext.resume().catch(() => {});
         }
+        audioContextMasterGain.gain.setValueAtTime(
+          Math.max(0.0001, getEffectiveVolume()),
+          audioContext.currentTime
+        );
         return audioContext;
       }
 
@@ -2320,7 +2452,7 @@
         amp.gain.exponentialRampToValueAtTime(gain, ctx.currentTime + delay + 0.01);
         amp.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + delay + duration);
         osc.connect(amp);
-        amp.connect(ctx.destination);
+        amp.connect(audioContextMasterGain || ctx.destination);
         osc.start(ctx.currentTime + delay);
         osc.stop(ctx.currentTime + delay + duration + 0.03);
       }
@@ -2357,7 +2489,7 @@
         source.buffer = buffer;
         source.connect(filter);
         filter.connect(amp);
-        amp.connect(ctx.destination);
+        amp.connect(audioContextMasterGain || ctx.destination);
         source.start(ctx.currentTime + delay);
         source.stop(ctx.currentTime + delay + duration + 0.03);
       }
@@ -2728,14 +2860,14 @@
         return state.questionPools[gym.id].shift();
       }
 
-      function showScreen(screen) {
+      function showScreen(screen, forceMusicRestart = false) {
         coverScreen.classList.add("hidden");
         selectionScreen.classList.add("hidden");
         mapScreen.classList.add("hidden");
         battleScreen.classList.add("hidden");
         resultScreen.classList.add("hidden");
         screen.classList.remove("hidden");
-        syncScreenMusic(screen);
+        syncScreenMusic(screen, forceMusicRestart);
       }
 
       function updateBallRow() {
@@ -2793,7 +2925,7 @@
                 <div class="gym-title">${gym.name}</div>
                 <div class="gym-sub">${typeLabels[gym.type]}屬性 (${gym.leader})</div>
               </div>
-              <div class="gym-badge">${permanentlyLocked ? "待更新" : (canEnter ? `${gym.questionCount} 題` : "未開放")}</div>
+              <div class="gym-badge">${permanentlyLocked ? "待更新" : (canEnter ? `打爆 HP` : "未開放")}</div>
             </div>
             <div class="gym-scene">
               <div class="gym-house-wrap">
@@ -2850,7 +2982,7 @@
 
       function renderBattle() {
         const gym = state.currentGym;
-        progressPanel.textContent = `${gym.name} ・ 第 ${state.questionIndex + 1} / ${state.totalQuestions} 題`;
+        progressPanel.textContent = `${gym.name} ・ 第 ${state.questionIndex + 1} 題 ・ 打爆 HP 先過關`;
         scorePanel.textContent = `徽章 ${state.clearedGyms.length}`;
 
         playerName.textContent = state.player.name;
@@ -3161,7 +3293,7 @@
         state.opponent = getOpponentFromGym(gym);
         effectLayer.innerHTML = "";
         closePokemonModal();
-        showScreen(battleScreen);
+        showScreen(battleScreen, true);
         renderBattle();
       }
 
@@ -3221,21 +3353,9 @@
         }
 
         state.questionIndex += 1;
-        if (state.questionIndex >= state.totalQuestions) {
-          if (state.player.hp >= state.opponent.hp) {
-            if (!state.clearedGyms.includes(state.currentGym.id)) {
-              state.clearedGyms.push(state.currentGym.id);
-            }
-            finishBattle("時間到都贏！", `${state.player.name} 完成晒題目，並且守住優勢，成功過關。`, true);
-          } else {
-            finishBattle("題目完成，但未過關", `${state.currentGym.label} 仲未打低，下次再試過。`, true);
-          }
-          return;
-        }
-
         setTimeout(() => {
           renderBattle();
-        }, 2680);
+        }, 1000);
       }
 
       function goToMap() {
@@ -3269,6 +3389,7 @@
       }
 
       updateBallRow();
+      applyAudioLevels();
       showScreen(coverScreen);
 
       document.addEventListener("pointerdown", playCurrentMusic, { once: true });
@@ -3276,6 +3397,19 @@
       entryBtn.addEventListener("click", () => {
         playUiSelect();
         showScreen(selectionScreen);
+      });
+      soundRange.addEventListener("input", () => {
+        audioSettings.volume = Math.min(1, Math.max(0, Number(soundRange.value) / 100));
+        if (audioSettings.volume > 0) {
+          audioSettings.muted = false;
+        }
+        applyAudioLevels();
+        saveAudioSettings();
+      });
+      soundToggleBtn.addEventListener("click", () => {
+        audioSettings.muted = !audioSettings.muted;
+        applyAudioLevels();
+        saveAudioSettings();
       });
       startAdventureBtn.addEventListener("click", goToMap);
       closeModalBtn.addEventListener("click", closePokemonModal);
