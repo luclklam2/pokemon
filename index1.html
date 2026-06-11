@@ -244,7 +244,7 @@
       }
 
       .mini-sprite-card {
-        min-height: 164px;
+        min-height: 184px;
         border: 4px solid rgba(255, 255, 255, 0.9);
         background: rgba(10, 20, 40, 0.45);
         display: flex;
@@ -254,12 +254,32 @@
       }
 
       .mini-sprite-card img {
-        width: 116px;
-        height: 116px;
+        width: 144px;
+        height: 144px;
         display: block;
-        transform: scale(1.45);
+        transform: scale(1.7);
         transform-origin: center;
         image-rendering: pixelated;
+      }
+
+      .selection-guide {
+        display: grid;
+        gap: 10px;
+        padding: 14px 16px;
+        border: 3px solid #111;
+        background: linear-gradient(180deg, #ffe77f 0%, #ffd73a 100%);
+        color: #101820;
+        box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.24);
+      }
+
+      .selection-guide strong {
+        font-size: clamp(20px, 4.2vw, 28px);
+      }
+
+      .selection-guide span {
+        font-size: clamp(15px, 3vw, 19px);
+        font-weight: 900;
+        line-height: 1.5;
       }
 
       .oak-card {
@@ -918,6 +938,9 @@
         position: relative;
         padding: 20px;
         overflow: hidden;
+        background:
+          radial-gradient(circle at center, rgba(255, 255, 255, 0.03), transparent 55%),
+          linear-gradient(180deg, rgba(9, 18, 36, 0.94) 0%, rgba(5, 10, 22, 0.98) 100%);
       }
 
       .battle-card::before {
@@ -928,6 +951,82 @@
           linear-gradient(135deg, rgba(255, 255, 255, 0.04), transparent 40%),
           radial-gradient(circle at center, rgba(255, 255, 255, 0.03), transparent 55%);
         pointer-events: none;
+      }
+
+      .battle-card.arena-electric {
+        background:
+          linear-gradient(180deg, rgba(57, 111, 186, 0.28), rgba(22, 49, 94, 0.16)),
+          repeating-linear-gradient(
+            90deg,
+            rgba(151, 197, 255, 0.16) 0 28px,
+            rgba(66, 116, 188, 0.16) 28px 56px
+          ),
+          repeating-linear-gradient(
+            0deg,
+            rgba(255, 255, 255, 0.08) 0 28px,
+            rgba(0, 0, 0, 0.08) 28px 56px
+          ),
+          linear-gradient(180deg, #356db3 0%, #224776 48%, #122842 100%);
+      }
+
+      .battle-card.arena-water {
+        background:
+          radial-gradient(circle at 22% 18%, rgba(255, 255, 255, 0.22), transparent 14%),
+          repeating-linear-gradient(
+            90deg,
+            rgba(214, 244, 255, 0.16) 0 34px,
+            rgba(94, 184, 226, 0.16) 34px 68px
+          ),
+          repeating-linear-gradient(
+            0deg,
+            rgba(255, 255, 255, 0.12) 0 34px,
+            rgba(57, 140, 193, 0.12) 34px 68px
+          ),
+          linear-gradient(180deg, #7bd7f4 0%, #40b4db 45%, #17719b 100%);
+      }
+
+      .battle-card.arena-fire {
+        background:
+          radial-gradient(circle at 50% 84%, rgba(255, 200, 84, 0.28), transparent 20%),
+          repeating-linear-gradient(
+            125deg,
+            rgba(255, 87, 34, 0.3) 0 12px,
+            rgba(47, 18, 13, 0) 12px 64px
+          ),
+          repeating-linear-gradient(
+            55deg,
+            rgba(255, 170, 72, 0.22) 0 10px,
+            rgba(24, 12, 12, 0) 10px 72px
+          ),
+          linear-gradient(180deg, #2c0c09 0%, #47120d 34%, #1f0b09 100%);
+      }
+
+      .battle-card.arena-grass {
+        background:
+          radial-gradient(circle at 20% 18%, rgba(255, 255, 255, 0.12), transparent 18%),
+          repeating-linear-gradient(
+            90deg,
+            rgba(217, 255, 186, 0.12) 0 26px,
+            rgba(127, 203, 95, 0.12) 26px 52px
+          ),
+          repeating-linear-gradient(
+            115deg,
+            rgba(255, 233, 148, 0.12) 0 18px,
+            rgba(0, 0, 0, 0) 18px 80px
+          ),
+          linear-gradient(180deg, #7fd05a 0%, #4d9d45 44%, #2c6d2f 100%);
+      }
+
+      .battle-card.arena-dark {
+        background:
+          radial-gradient(circle at 18% 20%, rgba(152, 205, 129, 0.1), transparent 18%),
+          radial-gradient(circle at 82% 24%, rgba(117, 171, 92, 0.08), transparent 16%),
+          repeating-linear-gradient(
+            90deg,
+            rgba(46, 77, 42, 0.18) 0 30px,
+            rgba(27, 47, 24, 0.18) 30px 60px
+          ),
+          linear-gradient(180deg, #1c3520 0%, #132517 48%, #0d1c10 100%);
       }
 
       .fighter {
@@ -1825,13 +1924,13 @@
         }
 
         .mini-sprite-card {
-          min-height: 118px;
+          min-height: 138px;
         }
 
         .mini-sprite-card img {
-          width: 82px;
-          height: 82px;
-          transform: scale(1.28);
+          width: 96px;
+          height: 96px;
+          transform: scale(1.48);
         }
 
         .oak-card {
@@ -1849,6 +1948,10 @@
 
         .ball-row {
           gap: 8px;
+        }
+
+        .selection-guide {
+          padding: 12px 12px;
         }
 
         .modal-card {
@@ -1926,8 +2029,8 @@
       <section id="selectionScreen">
         <div class="hero">
           <h1>大木博士研究所</h1>
-          <p>打開精靈球，揀你嘅拍檔</p>
-          <small>先揀一隻寶可夢，再開始 K2 數學冒險</small>
+          <p>先揀一隻寶可夢，再開始冒險</p>
+          <small>撳下面精靈球去揀拍檔，揀完先可以入地圖</small>
         </div>
 
         <div class="panel selection-shell">
@@ -1947,10 +2050,15 @@
               </div>
             </div>
 
+            <div class="selection-guide">
+              <strong>第 1 步：按下面任何一個精靈球</strong>
+              <span>揀咗寶可夢之後，先會開放「進入道場地圖」。</span>
+            </div>
+
             <div class="ball-row" id="ballRow"></div>
 
             <div class="actions">
-              <button class="primary-btn" id="startAdventureBtn" disabled>入去捉寶可夢</button>
+              <button class="primary-btn" id="startAdventureBtn" disabled>請先按下面精靈球揀寶可夢</button>
             </div>
           </div>
         </div>
@@ -2288,6 +2396,7 @@
       const opponentSpriteWrap = document.getElementById("opponentSpriteWrap");
       const playerSpriteWrap = document.getElementById("playerSpriteWrap");
       const effectLayer = document.getElementById("effectLayer");
+      const battleCard = document.querySelector(".battle-card");
 
       const progressPanel = document.getElementById("progressPanel");
       const scorePanel = document.getElementById("scorePanel");
@@ -2323,9 +2432,9 @@
         battle: new Audio("./assets/audio/battle-bgm.ogg")
       };
       const uiSelectSound = new Audio("./assets/audio/menu-select.wav");
-      const baseMusicVolumes = {
+      const baseMediaVolumes = {
         ui: 0.24,
-        battle: 0.12
+        battle: 0.06
       };
       const baseUiSelectVolume = 0.3;
       const audioSettings = {
@@ -2339,6 +2448,10 @@
       uiSelectSound.preload = "auto";
       let currentMusicKey = null;
       let battleReturnTimer = null;
+      let mediaGainNodes = {};
+      let musicBusGain = null;
+      let sfxBusGain = null;
+      let audioRoutingReady = false;
 
       function getEffectiveVolume() {
         return audioSettings.muted ? 0 : audioSettings.volume;
@@ -2354,11 +2467,31 @@
 
       function applyAudioLevels() {
         const effective = getEffectiveVolume();
-        musicPlayers.ui.volume = baseMusicVolumes.ui * effective;
-        musicPlayers.battle.volume = baseMusicVolumes.battle * effective;
-        uiSelectSound.volume = baseUiSelectVolume * effective;
+        const resolvedUiVolume = baseMediaVolumes.ui * effective;
+        const resolvedBattleVolume = baseMediaVolumes.battle * effective;
+        const resolvedUiSelectVolume = baseUiSelectVolume * effective;
+
+        musicPlayers.ui.volume = resolvedUiVolume;
+        musicPlayers.battle.volume = resolvedBattleVolume;
+        uiSelectSound.volume = resolvedUiSelectVolume;
+
+        if (mediaGainNodes.ui && audioContext) {
+          mediaGainNodes.ui.gain.setValueAtTime(Math.max(0.0001, resolvedUiVolume), audioContext.currentTime);
+        }
+        if (mediaGainNodes.battle && audioContext) {
+          mediaGainNodes.battle.gain.setValueAtTime(Math.max(0.0001, resolvedBattleVolume), audioContext.currentTime);
+        }
+        if (mediaGainNodes.uiSelect && audioContext) {
+          mediaGainNodes.uiSelect.gain.setValueAtTime(Math.max(0.0001, resolvedUiSelectVolume), audioContext.currentTime);
+        }
         if (audioContextMasterGain && audioContext) {
-          audioContextMasterGain.gain.setValueAtTime(Math.max(0.0001, effective), audioContext.currentTime);
+          audioContextMasterGain.gain.setValueAtTime(1, audioContext.currentTime);
+        }
+        if (musicBusGain && audioContext) {
+          musicBusGain.gain.setValueAtTime(1, audioContext.currentTime);
+        }
+        if (sfxBusGain && audioContext) {
+          sfxBusGain.gain.setValueAtTime(Math.max(0.0001, effective), audioContext.currentTime);
         }
         updateSoundUi();
       }
@@ -2383,12 +2516,14 @@
       }
 
       function playCurrentMusic() {
+        ensureAudioContext();
         if (!currentMusicKey || !musicPlayers[currentMusicKey]) return;
         const active = musicPlayers[currentMusicKey];
         active.play().catch(() => {});
       }
 
       function syncScreenMusic(screen, forceRestart = false) {
+        ensureAudioContext();
         const nextKey = getMusicKeyForScreen(screen);
         if (currentMusicKey === nextKey && !forceRestart) return;
         stopAllMusic(nextKey);
@@ -2400,6 +2535,7 @@
       }
 
       function playUiSelect() {
+        ensureAudioContext();
         uiSelectSound.currentTime = 0;
         uiSelectSound.play().catch(() => {});
       }
@@ -2415,13 +2551,32 @@
           audioContextMasterGain = audioContext.createGain();
           audioContextMasterGain.connect(audioContext.destination);
         }
+        if (!musicBusGain) {
+          musicBusGain = audioContext.createGain();
+          musicBusGain.connect(audioContextMasterGain);
+        }
+        if (!sfxBusGain) {
+          sfxBusGain = audioContext.createGain();
+          sfxBusGain.connect(audioContextMasterGain);
+        }
+        if (!audioRoutingReady) {
+          [
+            ["ui", musicPlayers.ui, musicBusGain],
+            ["battle", musicPlayers.battle, musicBusGain],
+            ["uiSelect", uiSelectSound, sfxBusGain]
+          ].forEach(([key, audio, bus]) => {
+            const source = audioContext.createMediaElementSource(audio);
+            const gainNode = audioContext.createGain();
+            source.connect(gainNode);
+            gainNode.connect(bus);
+            mediaGainNodes[key] = gainNode;
+          });
+          audioRoutingReady = true;
+        }
         if (audioContext.state === "suspended") {
           audioContext.resume().catch(() => {});
         }
-        audioContextMasterGain.gain.setValueAtTime(
-          Math.max(0.0001, getEffectiveVolume()),
-          audioContext.currentTime
-        );
+        applyAudioLevels();
         return audioContext;
       }
 
@@ -2452,7 +2607,7 @@
         amp.gain.exponentialRampToValueAtTime(gain, ctx.currentTime + delay + 0.01);
         amp.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + delay + duration);
         osc.connect(amp);
-        amp.connect(audioContextMasterGain || ctx.destination);
+        amp.connect(sfxBusGain || audioContextMasterGain || ctx.destination);
         osc.start(ctx.currentTime + delay);
         osc.stop(ctx.currentTime + delay + duration + 0.03);
       }
@@ -2489,7 +2644,7 @@
         source.buffer = buffer;
         source.connect(filter);
         filter.connect(amp);
-        amp.connect(audioContextMasterGain || ctx.destination);
+        amp.connect(sfxBusGain || audioContextMasterGain || ctx.destination);
         source.start(ctx.currentTime + delay);
         source.stop(ctx.currentTime + delay + duration + 0.03);
       }
@@ -2523,14 +2678,19 @@
           ]
         };
 
-        (soundMap[type] || soundMap.electric).forEach(playTone);
+        (soundMap[type] || soundMap.electric).forEach((tone) => {
+          playTone({
+            ...tone,
+            gain: tone.gain * 1.65
+          });
+        });
       }
 
       function playHitSound() {
-        playNoiseBurst({ duration: 0.1, gain: 0.018, lowpass: 820 });
-        playTone({ frequency: 132, endFrequency: 82, duration: 0.22, delay: 0.02, type: "square", gain: 0.028 });
-        playTone({ frequency: 96, endFrequency: 58, duration: 0.28, delay: 0.07, type: "triangle", gain: 0.02 });
-        playNoiseBurst({ duration: 0.08, delay: 0.06, gain: 0.01, lowpass: 520 });
+        playNoiseBurst({ duration: 0.1, gain: 0.036, lowpass: 820 });
+        playTone({ frequency: 132, endFrequency: 82, duration: 0.22, delay: 0.02, type: "square", gain: 0.05 });
+        playTone({ frequency: 96, endFrequency: 58, duration: 0.28, delay: 0.07, type: "triangle", gain: 0.034 });
+        playNoiseBurst({ duration: 0.08, delay: 0.06, gain: 0.02, lowpass: 520 });
       }
 
       function showDamageStamp(targetWrap, damage) {
@@ -2980,8 +3140,23 @@
         return `${attackerName} 今次屬性平手`;
       }
 
+      function updateBattleArena(type) {
+        if (!battleCard) return;
+        battleCard.classList.remove(
+          "arena-electric",
+          "arena-water",
+          "arena-fire",
+          "arena-grass",
+          "arena-dark"
+        );
+        if (type) {
+          battleCard.classList.add(`arena-${type}`);
+        }
+      }
+
       function renderBattle() {
         const gym = state.currentGym;
+        updateBattleArena(gym.type);
         progressPanel.textContent = `${gym.name} ・ 第 ${state.questionIndex + 1} 題 ・ 打爆 HP 先過關`;
         scorePanel.textContent = `徽章 ${state.clearedGyms.length}`;
 
@@ -3382,7 +3557,7 @@
         state.opponent = null;
         effectLayer.innerHTML = "";
         startAdventureBtn.disabled = true;
-        startAdventureBtn.textContent = "入去捉寶可夢";
+        startAdventureBtn.textContent = "請先按下面精靈球揀寶可夢";
         updateBallRow();
         closePokemonModal();
         showScreen(selectionScreen);
