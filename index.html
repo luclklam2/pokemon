@@ -897,7 +897,7 @@
 
       .hp-box {
         text-align: right;
-        font-size: clamp(18px, 4vw, 26px);
+        font-size: clamp(22px, 4.8vw, 34px);
         font-weight: 900;
       }
 
@@ -956,14 +956,14 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        min-height: 230px;
-        margin: 22px 0 8px;
+        min-height: 264px;
+        margin: 14px 0 6px;
         position: relative;
       }
 
       .sprite-wrap img {
-        width: clamp(220px, 48vw, 320px);
-        height: clamp(220px, 48vw, 320px);
+        width: clamp(260px, 54vw, 360px);
+        height: clamp(260px, 54vw, 360px);
         image-rendering: pixelated;
         filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.45));
         transition: transform 0.25s ease;
@@ -985,6 +985,59 @@
           drop-shadow(0 14px 22px rgba(0, 0, 0, 0.45));
       }
 
+      .sprite-wrap.near-faint img {
+        animation: nearFaintBlink 0.7s steps(2, end) infinite;
+        filter:
+          brightness(1.28)
+          drop-shadow(0 0 20px rgba(255, 96, 120, 0.5))
+          drop-shadow(0 14px 22px rgba(0, 0, 0, 0.45));
+      }
+
+      .damage-stamp {
+        position: absolute;
+        top: 18px;
+        left: 50%;
+        z-index: 6;
+        padding: 10px 14px;
+        border: 2px solid rgba(255, 215, 221, 0.52);
+        background: rgba(255, 74, 105, 0.22);
+        color: #ffeef2;
+        font-size: clamp(24px, 5vw, 38px);
+        font-weight: 900;
+        line-height: 1;
+        letter-spacing: 0;
+        box-shadow:
+          0 0 0 3px rgba(255, 74, 105, 0.12),
+          0 12px 22px rgba(0, 0, 0, 0.18);
+        text-shadow:
+          0 2px 10px rgba(168, 8, 46, 0.65),
+          0 0 8px rgba(255, 255, 255, 0.42);
+        backdrop-filter: blur(3px);
+        transform: translate(-50%, 10px) scale(0.82);
+        opacity: 0;
+        pointer-events: none;
+        animation: damageStamp 1.14s cubic-bezier(0.2, 0.8, 0.22, 1) forwards;
+      }
+
+      @keyframes damageStamp {
+        0% {
+          opacity: 0;
+          transform: translate(-50%, 16px) scale(0.72);
+        }
+        18% {
+          opacity: 1;
+          transform: translate(-50%, -4px) scale(1.08);
+        }
+        70% {
+          opacity: 1;
+          transform: translate(-50%, -16px) scale(1);
+        }
+        100% {
+          opacity: 0;
+          transform: translate(-50%, -30px) scale(0.96);
+        }
+      }
+
       @keyframes defenderShake {
         0% { transform: translateX(0) scale(1); }
         15% { transform: translateX(-22px) scale(1.08); }
@@ -993,6 +1046,21 @@
         60% { transform: translateX(16px) scale(1.03); }
         75% { transform: translateX(-10px) scale(1.02); }
         100% { transform: translateX(0) scale(1); }
+      }
+
+      @keyframes nearFaintBlink {
+        0% {
+          opacity: 1;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 0.42;
+          transform: scale(0.98);
+        }
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
       }
 
       .effect-layer {
@@ -1088,6 +1156,46 @@
         animation: trailShot 0.68s ease-out forwards;
       }
 
+      .effect.trail.type-electric {
+        background: linear-gradient(180deg,
+          rgba(255, 255, 255, 0) 0%,
+          rgba(255, 250, 180, 0.18) 22%,
+          rgba(255, 228, 90, 0.82) 68%,
+          rgba(255, 255, 255, 0.98) 100%);
+      }
+
+      .effect.trail.type-water {
+        background: linear-gradient(180deg,
+          rgba(255, 255, 255, 0) 0%,
+          rgba(175, 238, 255, 0.18) 22%,
+          rgba(110, 214, 255, 0.82) 68%,
+          rgba(235, 251, 255, 0.98) 100%);
+      }
+
+      .effect.trail.type-fire {
+        background: linear-gradient(180deg,
+          rgba(255, 255, 255, 0) 0%,
+          rgba(255, 212, 150, 0.18) 22%,
+          rgba(255, 139, 70, 0.84) 68%,
+          rgba(255, 244, 220, 0.98) 100%);
+      }
+
+      .effect.trail.type-grass {
+        background: linear-gradient(180deg,
+          rgba(255, 255, 255, 0) 0%,
+          rgba(212, 255, 184, 0.16) 22%,
+          rgba(111, 223, 112, 0.8) 68%,
+          rgba(239, 255, 235, 0.98) 100%);
+      }
+
+      .effect.trail.type-dark {
+        background: linear-gradient(180deg,
+          rgba(255, 255, 255, 0) 0%,
+          rgba(229, 205, 255, 0.12) 22%,
+          rgba(177, 115, 255, 0.76) 68%,
+          rgba(248, 240, 255, 0.96) 100%);
+      }
+
       .effect.impact {
         font-size: clamp(56px, 12vw, 96px);
         animation: impact 0.42s ease-out forwards;
@@ -1096,6 +1204,66 @@
       .effect.launch {
         font-size: clamp(52px, 11vw, 88px);
         animation: launchBurst 0.32s ease-out forwards;
+      }
+
+      .effect.bolt.motion-electric {
+        animation: electricBoltPath 0.68s cubic-bezier(0.24, 0.82, 0.2, 1) forwards;
+      }
+
+      .effect.bolt.motion-fire {
+        animation: fireBoltPath 0.72s cubic-bezier(0.22, 0.8, 0.24, 1) forwards;
+      }
+
+      .effect.bolt.motion-water {
+        animation: waterBoltPath 0.78s cubic-bezier(0.2, 0.8, 0.22, 1) forwards;
+      }
+
+      .effect.bolt.motion-grass {
+        animation: grassBoltPath 0.82s cubic-bezier(0.2, 0.8, 0.22, 1) forwards;
+      }
+
+      .effect.bolt.motion-dark {
+        animation: darkBoltPath 0.56s cubic-bezier(0.14, 0.86, 0.18, 1) forwards;
+      }
+
+      .effect.shot.motion-electric {
+        animation: electricShotPath 0.7s cubic-bezier(0.24, 0.82, 0.2, 1) forwards;
+      }
+
+      .effect.shot.motion-fire {
+        animation: fireShotPath 0.74s cubic-bezier(0.22, 0.8, 0.24, 1) forwards;
+      }
+
+      .effect.shot.motion-water {
+        animation: waterShotPath 0.8s cubic-bezier(0.2, 0.8, 0.22, 1) forwards;
+      }
+
+      .effect.shot.motion-grass {
+        animation: grassShotPath 0.84s cubic-bezier(0.2, 0.8, 0.22, 1) forwards;
+      }
+
+      .effect.shot.motion-dark {
+        animation: darkShotPath 0.54s cubic-bezier(0.14, 0.86, 0.18, 1) forwards;
+      }
+
+      .effect.trail.motion-electric {
+        animation: electricTrailPath 0.66s ease-out forwards;
+      }
+
+      .effect.trail.motion-fire {
+        animation: fireTrailPath 0.74s ease-out forwards;
+      }
+
+      .effect.trail.motion-water {
+        animation: waterTrailPath 0.8s ease-out forwards;
+      }
+
+      .effect.trail.motion-grass {
+        animation: grassTrailPath 0.84s ease-out forwards;
+      }
+
+      .effect.trail.motion-dark {
+        animation: darkTrailPath 0.5s ease-out forwards;
       }
 
       @keyframes projectile {
@@ -1137,6 +1305,238 @@
         100% {
           opacity: 1;
           transform: translate(calc(var(--ex) - 50%), calc(var(--ey) - 50%)) scale(1.18) rotate(8deg);
+        }
+      }
+
+      @keyframes electricBoltPath {
+        0% {
+          opacity: 0;
+          transform: translate(calc(var(--sx) - 50%), calc(var(--sy) - 50%)) scale(0.42) rotate(-14deg);
+        }
+        18% { opacity: 1; }
+        28% {
+          transform: translate(calc(var(--p1x) - 50%), calc(var(--p1y) - 50%)) scale(0.86) rotate(-8deg);
+        }
+        52% {
+          transform: translate(calc(var(--p2x) - 50%), calc(var(--p2y) - 50%)) scale(1.02) rotate(10deg);
+        }
+        74% {
+          transform: translate(calc(var(--p3x) - 50%), calc(var(--p3y) - 50%)) scale(1.1) rotate(-6deg);
+        }
+        100% {
+          opacity: 1;
+          transform: translate(calc(var(--ex) - 50%), calc(var(--ey) - 50%)) scale(1.18) rotate(8deg);
+        }
+      }
+
+      @keyframes fireBoltPath {
+        0% {
+          opacity: 0;
+          transform: translate(calc(var(--sx) - 50%), calc(var(--sy) - 50%)) scale(0.46) rotate(-12deg);
+        }
+        16% { opacity: 1; }
+        48% {
+          transform: translate(calc(var(--p1x) - 50%), calc(var(--p1y) - 50%)) scale(0.96) rotate(6deg);
+        }
+        76% {
+          transform: translate(calc(var(--p2x) - 50%), calc(var(--p2y) - 50%)) scale(1.08) rotate(10deg);
+        }
+        100% {
+          opacity: 1;
+          transform: translate(calc(var(--ex) - 50%), calc(var(--ey) - 50%)) scale(1.22) rotate(14deg);
+        }
+      }
+
+      @keyframes waterBoltPath {
+        0% {
+          opacity: 0;
+          transform: translate(calc(var(--sx) - 50%), calc(var(--sy) - 50%)) scale(0.42);
+        }
+        18% { opacity: 1; }
+        30% {
+          transform: translate(calc(var(--p1x) - 50%), calc(var(--p1y) - 50%)) scale(0.84);
+        }
+        58% {
+          transform: translate(calc(var(--p2x) - 50%), calc(var(--p2y) - 50%)) scale(1.02);
+        }
+        80% {
+          transform: translate(calc(var(--p3x) - 50%), calc(var(--p3y) - 50%)) scale(1.08);
+        }
+        100% {
+          opacity: 1;
+          transform: translate(calc(var(--ex) - 50%), calc(var(--ey) - 50%)) scale(1.14);
+        }
+      }
+
+      @keyframes grassBoltPath {
+        0% {
+          opacity: 0;
+          transform: translate(calc(var(--sx) - 50%), calc(var(--sy) - 50%)) scale(0.4) rotate(-6deg);
+        }
+        18% { opacity: 1; }
+        26% {
+          transform: translate(calc(var(--p1x) - 50%), calc(var(--p1y) - 50%)) scale(0.78) rotate(6deg);
+        }
+        52% {
+          transform: translate(calc(var(--p2x) - 50%), calc(var(--p2y) - 50%)) scale(0.98) rotate(-8deg);
+        }
+        76% {
+          transform: translate(calc(var(--p3x) - 50%), calc(var(--p3y) - 50%)) scale(1.08) rotate(8deg);
+        }
+        100% {
+          opacity: 1;
+          transform: translate(calc(var(--ex) - 50%), calc(var(--ey) - 50%)) scale(1.16) rotate(-2deg);
+        }
+      }
+
+      @keyframes darkBoltPath {
+        0% {
+          opacity: 0;
+          transform: translate(calc(var(--sx) - 50%), calc(var(--sy) - 50%)) scale(0.3);
+        }
+        22% {
+          opacity: 0.86;
+          transform: translate(calc(var(--p1x) - 50%), calc(var(--p1y) - 50%)) scale(1.08);
+        }
+        74% {
+          opacity: 1;
+          transform: translate(calc(var(--p2x) - 50%), calc(var(--p2y) - 50%)) scale(1.22);
+        }
+        100% {
+          opacity: 1;
+          transform: translate(calc(var(--ex) - 50%), calc(var(--ey) - 50%)) scale(1.14);
+        }
+      }
+
+      @keyframes electricShotPath {
+        0% {
+          opacity: 0;
+          transform: translate(calc(var(--sx) - 50%), calc(var(--sy) - 50%)) scale(0.42);
+        }
+        20% { opacity: 1; }
+        36% { transform: translate(calc(var(--p1x) - 50%), calc(var(--p1y) - 50%)) scale(0.82); }
+        60% { transform: translate(calc(var(--p2x) - 50%), calc(var(--p2y) - 50%)) scale(1); }
+        82% { transform: translate(calc(var(--p3x) - 50%), calc(var(--p3y) - 50%)) scale(1.08); }
+        100% {
+          opacity: 1;
+          transform: translate(calc(var(--ex) - 50%), calc(var(--ey) - 50%)) scale(1.12);
+        }
+      }
+
+      @keyframes fireShotPath {
+        0% {
+          opacity: 0;
+          transform: translate(calc(var(--sx) - 50%), calc(var(--sy) - 50%)) scale(0.42);
+        }
+        18% { opacity: 1; }
+        52% { transform: translate(calc(var(--p1x) - 50%), calc(var(--p1y) - 50%)) scale(0.96); }
+        80% { transform: translate(calc(var(--p2x) - 50%), calc(var(--p2y) - 50%)) scale(1.08); }
+        100% {
+          opacity: 1;
+          transform: translate(calc(var(--ex) - 50%), calc(var(--ey) - 50%)) scale(1.12);
+        }
+      }
+
+      @keyframes waterShotPath {
+        0% {
+          opacity: 0;
+          transform: translate(calc(var(--sx) - 50%), calc(var(--sy) - 50%)) scale(0.4);
+        }
+        18% { opacity: 1; }
+        30% { transform: translate(calc(var(--p1x) - 50%), calc(var(--p1y) - 50%)) scale(0.8); }
+        58% { transform: translate(calc(var(--p2x) - 50%), calc(var(--p2y) - 50%)) scale(0.98); }
+        84% { transform: translate(calc(var(--p3x) - 50%), calc(var(--p3y) - 50%)) scale(1.06); }
+        100% {
+          opacity: 1;
+          transform: translate(calc(var(--ex) - 50%), calc(var(--ey) - 50%)) scale(1.1);
+        }
+      }
+
+      @keyframes grassShotPath {
+        0% {
+          opacity: 0;
+          transform: translate(calc(var(--sx) - 50%), calc(var(--sy) - 50%)) scale(0.38);
+        }
+        16% { opacity: 1; }
+        28% { transform: translate(calc(var(--p1x) - 50%), calc(var(--p1y) - 50%)) scale(0.76); }
+        54% { transform: translate(calc(var(--p2x) - 50%), calc(var(--p2y) - 50%)) scale(0.96); }
+        80% { transform: translate(calc(var(--p3x) - 50%), calc(var(--p3y) - 50%)) scale(1.08); }
+        100% {
+          opacity: 1;
+          transform: translate(calc(var(--ex) - 50%), calc(var(--ey) - 50%)) scale(1.1);
+        }
+      }
+
+      @keyframes darkShotPath {
+        0% {
+          opacity: 0;
+          transform: translate(calc(var(--sx) - 50%), calc(var(--sy) - 50%)) scale(0.28);
+        }
+        24% { opacity: 0.86; }
+        70% { transform: translate(calc(var(--p1x) - 50%), calc(var(--p1y) - 50%)) scale(1.12); }
+        100% {
+          opacity: 1;
+          transform: translate(calc(var(--ex) - 50%), calc(var(--ey) - 50%)) scale(1.06);
+        }
+      }
+
+      @keyframes electricTrailPath {
+        0% {
+          opacity: 0;
+          transform: translate(calc(var(--p1x) - 50%), calc(var(--sy) - 50%)) rotate(-12deg) scaleY(0.18);
+        }
+        24% { opacity: 0.94; }
+        100% {
+          opacity: 0;
+          transform: translate(calc(var(--p3x) - 50%), calc(var(--ey) - 50%)) rotate(10deg) scaleY(1.1);
+        }
+      }
+
+      @keyframes fireTrailPath {
+        0% {
+          opacity: 0;
+          transform: translate(calc(var(--sx) - 50%), calc(var(--sy) - 50%)) rotate(-20deg) scaleY(0.16);
+        }
+        22% { opacity: 0.92; }
+        100% {
+          opacity: 0;
+          transform: translate(calc(var(--p2x) - 50%), calc(var(--ey) - 50%)) rotate(18deg) scaleY(1.08);
+        }
+      }
+
+      @keyframes waterTrailPath {
+        0% {
+          opacity: 0;
+          transform: translate(calc(var(--p1x) - 50%), calc(var(--sy) - 50%)) rotate(-8deg) scaleY(0.16);
+        }
+        24% { opacity: 0.9; }
+        100% {
+          opacity: 0;
+          transform: translate(calc(var(--p3x) - 50%), calc(var(--ey) - 50%)) rotate(8deg) scaleY(1.08);
+        }
+      }
+
+      @keyframes grassTrailPath {
+        0% {
+          opacity: 0;
+          transform: translate(calc(var(--p1x) - 50%), calc(var(--sy) - 50%)) rotate(14deg) scaleY(0.16);
+        }
+        20% { opacity: 0.94; }
+        100% {
+          opacity: 0;
+          transform: translate(calc(var(--p3x) - 50%), calc(var(--ey) - 50%)) rotate(-14deg) scaleY(1.08);
+        }
+      }
+
+      @keyframes darkTrailPath {
+        0% {
+          opacity: 0;
+          transform: translate(calc(var(--sx) - 50%), calc(var(--sy) - 50%)) scaleY(0.12);
+        }
+        16% { opacity: 0.8; }
+        100% {
+          opacity: 0;
+          transform: translate(calc(var(--p2x) - 50%), calc(var(--ey) - 50%)) scaleY(1.02);
         }
       }
 
@@ -1301,12 +1701,12 @@
         }
 
         .sprite-wrap {
-          min-height: 208px;
+          min-height: 236px;
         }
 
         .sprite-wrap img {
-          width: clamp(180px, 34vw, 240px);
-          height: clamp(180px, 34vw, 240px);
+          width: clamp(220px, 40vw, 280px);
+          height: clamp(220px, 40vw, 280px);
         }
       }
 
@@ -1413,12 +1813,12 @@
         }
 
         .sprite-wrap {
-          min-height: 194px;
+          min-height: 220px;
         }
 
         .sprite-wrap img {
-          width: clamp(170px, 52vw, 220px);
-          height: clamp(170px, 52vw, 220px);
+          width: clamp(200px, 60vw, 250px);
+          height: clamp(200px, 60vw, 250px);
         }
 
         .choices {
@@ -1628,7 +2028,7 @@
           ball: "./assets/pixel-pokeball-ultra.svg",
           ballName: "高級球",
           hp: 80,
-          attack: 24,
+          attack: 16,
           effect: ["⚡", "✦", "⚡", "✦"]
         },
         {
@@ -1641,7 +2041,7 @@
           ball: "./assets/pixel-pokeball-master.svg",
           ballName: "大師球",
           hp: 100,
-          attack: 20,
+          attack: 13,
           effect: ["🔥", "✦", "🔥", "✦"]
         },
         {
@@ -1654,7 +2054,7 @@
           ball: "./assets/pixel-pokeball-red.svg",
           ballName: "精靈球",
           hp: 110,
-          attack: 18,
+          attack: 12,
           effect: ["💧", "✦", "💧", "✦"]
         },
         {
@@ -1667,7 +2067,7 @@
           ball: "./assets/pixel-pokeball-safari.svg",
           ballName: "狩獵球",
           hp: 120,
-          attack: 17,
+          attack: 11,
           effect: ["🌿", "✦", "🌿", "✦"]
         },
         {
@@ -1680,7 +2080,7 @@
           ball: "./assets/pixel-pokeball-great.svg",
           ballName: "超級球",
           hp: 90,
-          attack: 16,
+          attack: 10,
           effect: ["✨", "✦", "✨", "✦"]
         }
       ];
@@ -1829,6 +2229,192 @@
         return Math.max(0, Math.round(value));
       }
 
+      const musicPlayers = {
+        ui: new Audio("./assets/audio/ui-bgm.ogg"),
+        battle: new Audio("./assets/audio/battle-bgm.ogg")
+      };
+      const uiSelectSound = new Audio("./assets/audio/menu-select.wav");
+      Object.values(musicPlayers).forEach((audio) => {
+        audio.loop = true;
+        audio.preload = "auto";
+        audio.volume = 0.24;
+      });
+      musicPlayers.battle.volume = 0.12;
+      uiSelectSound.preload = "auto";
+      uiSelectSound.volume = 0.3;
+      let currentMusicKey = null;
+      let battleReturnTimer = null;
+
+      function getMusicKeyForScreen(screen) {
+        if (screen === coverScreen || screen === selectionScreen || screen === mapScreen) return "ui";
+        if (screen === battleScreen) return "battle";
+        return null;
+      }
+
+      function stopAllMusic(exceptKey = null) {
+        Object.entries(musicPlayers).forEach(([key, audio]) => {
+          if (key === exceptKey) return;
+          audio.pause();
+          audio.currentTime = 0;
+        });
+      }
+
+      function playCurrentMusic() {
+        if (!currentMusicKey || !musicPlayers[currentMusicKey]) return;
+        const active = musicPlayers[currentMusicKey];
+        active.play().catch(() => {});
+      }
+
+      function syncScreenMusic(screen) {
+        const nextKey = getMusicKeyForScreen(screen);
+        if (currentMusicKey === nextKey) return;
+        stopAllMusic(nextKey);
+        currentMusicKey = nextKey;
+        if (!nextKey) return;
+        const active = musicPlayers[nextKey];
+        active.currentTime = 0;
+        active.play().catch(() => {});
+      }
+
+      function playUiSelect() {
+        uiSelectSound.currentTime = 0;
+        uiSelectSound.play().catch(() => {});
+      }
+
+      let audioContext = null;
+
+      function ensureAudioContext() {
+        const AudioCtor = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtor) return null;
+        if (!audioContext) audioContext = new AudioCtor();
+        if (audioContext.state === "suspended") {
+          audioContext.resume().catch(() => {});
+        }
+        return audioContext;
+      }
+
+      function playTone(options) {
+        const ctx = ensureAudioContext();
+        if (!ctx) return;
+
+        const {
+          frequency = 440,
+          duration = 0.12,
+          delay = 0,
+          type = "square",
+          gain = 0.035,
+          endFrequency = null
+        } = options;
+
+        const osc = ctx.createOscillator();
+        const amp = ctx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(frequency, ctx.currentTime + delay);
+        if (endFrequency) {
+          osc.frequency.exponentialRampToValueAtTime(
+            Math.max(40, endFrequency),
+            ctx.currentTime + delay + duration
+          );
+        }
+        amp.gain.setValueAtTime(0.0001, ctx.currentTime + delay);
+        amp.gain.exponentialRampToValueAtTime(gain, ctx.currentTime + delay + 0.01);
+        amp.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + delay + duration);
+        osc.connect(amp);
+        amp.connect(ctx.destination);
+        osc.start(ctx.currentTime + delay);
+        osc.stop(ctx.currentTime + delay + duration + 0.03);
+      }
+
+      function playNoiseBurst(options = {}) {
+        const ctx = ensureAudioContext();
+        if (!ctx) return;
+
+        const {
+          duration = 0.12,
+          delay = 0,
+          gain = 0.018,
+          lowpass = 900
+        } = options;
+
+        const bufferSize = Math.max(1, Math.floor(ctx.sampleRate * duration));
+        const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+        const data = buffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i += 1) {
+          data[i] = (Math.random() * 2 - 1) * (1 - i / bufferSize);
+        }
+
+        const source = ctx.createBufferSource();
+        const filter = ctx.createBiquadFilter();
+        filter.type = "lowpass";
+        filter.frequency.setValueAtTime(lowpass, ctx.currentTime + delay);
+        filter.Q.value = 1.2;
+
+        const amp = ctx.createGain();
+        amp.gain.setValueAtTime(0.0001, ctx.currentTime + delay);
+        amp.gain.exponentialRampToValueAtTime(gain, ctx.currentTime + delay + 0.01);
+        amp.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + delay + duration);
+
+        source.buffer = buffer;
+        source.connect(filter);
+        filter.connect(amp);
+        amp.connect(ctx.destination);
+        source.start(ctx.currentTime + delay);
+        source.stop(ctx.currentTime + delay + duration + 0.03);
+      }
+
+      function playAttackSound(type) {
+        const soundMap = {
+          electric: [
+            { frequency: 720, endFrequency: 1240, duration: 0.16, type: "sawtooth", gain: 0.032 },
+            { frequency: 960, endFrequency: 1480, duration: 0.2, delay: 0.07, type: "square", gain: 0.026 },
+            { frequency: 1180, endFrequency: 820, duration: 0.18, delay: 0.14, type: "triangle", gain: 0.018 }
+          ],
+          water: [
+            { frequency: 360, endFrequency: 250, duration: 0.18, type: "triangle", gain: 0.03 },
+            { frequency: 520, endFrequency: 340, duration: 0.22, delay: 0.06, type: "sine", gain: 0.022 },
+            { frequency: 280, endFrequency: 220, duration: 0.18, delay: 0.14, type: "sine", gain: 0.016 }
+          ],
+          fire: [
+            { frequency: 260, endFrequency: 520, duration: 0.16, type: "sawtooth", gain: 0.034 },
+            { frequency: 420, endFrequency: 820, duration: 0.2, delay: 0.06, type: "square", gain: 0.024 },
+            { frequency: 560, endFrequency: 980, duration: 0.18, delay: 0.14, type: "triangle", gain: 0.018 }
+          ],
+          grass: [
+            { frequency: 420, endFrequency: 620, duration: 0.16, type: "triangle", gain: 0.026 },
+            { frequency: 520, endFrequency: 760, duration: 0.18, delay: 0.07, type: "sine", gain: 0.02 },
+            { frequency: 620, endFrequency: 500, duration: 0.18, delay: 0.15, type: "triangle", gain: 0.016 }
+          ],
+          dark: [
+            { frequency: 240, endFrequency: 170, duration: 0.18, type: "square", gain: 0.03 },
+            { frequency: 320, endFrequency: 210, duration: 0.22, delay: 0.05, type: "triangle", gain: 0.02 },
+            { frequency: 180, endFrequency: 120, duration: 0.2, delay: 0.14, type: "sine", gain: 0.015 }
+          ]
+        };
+
+        (soundMap[type] || soundMap.electric).forEach(playTone);
+      }
+
+      function playHitSound() {
+        playNoiseBurst({ duration: 0.1, gain: 0.018, lowpass: 820 });
+        playTone({ frequency: 132, endFrequency: 82, duration: 0.22, delay: 0.02, type: "square", gain: 0.028 });
+        playTone({ frequency: 96, endFrequency: 58, duration: 0.28, delay: 0.07, type: "triangle", gain: 0.02 });
+        playNoiseBurst({ duration: 0.08, delay: 0.06, gain: 0.01, lowpass: 520 });
+      }
+
+      function showDamageStamp(targetWrap, damage) {
+        const existing = targetWrap.querySelector(".damage-stamp");
+        if (existing) existing.remove();
+
+        const stamp = document.createElement("div");
+        stamp.className = "damage-stamp";
+        stamp.textContent = `-${damage} HP`;
+        targetWrap.appendChild(stamp);
+
+        setTimeout(() => {
+          stamp.remove();
+        }, 980);
+      }
+
       function getPokemonById(id) {
         return pokemonRoster.find((pokemon) => pokemon.id === id);
       }
@@ -1883,14 +2469,86 @@
         return 1;
       }
 
-      function buildChoices(answer, min, max, count) {
-        const options = new Set([answer]);
-        while (options.size < count) {
-          const offset = Math.floor(Math.random() * 7) - 3;
-          const next = Math.max(min, Math.min(max, answer + offset || answer + 1));
-          options.add(next);
+      function buildChoices(answer, min, max, count, seedCandidates = []) {
+        const wrongOptions = [];
+        const seen = new Set([answer]);
+
+        function tryAdd(value) {
+          if (!Number.isFinite(value)) return;
+          const next = Math.max(min, Math.min(max, Math.round(value)));
+          if (next === answer || seen.has(next)) return;
+          seen.add(next);
+          wrongOptions.push(next);
         }
-        return shuffle(Array.from(options).map(String));
+
+        seedCandidates.forEach(tryAdd);
+
+        const fallbackOffsets = [-1, 1, -2, 2, -3, 3, -5, 5, -10, 10];
+        fallbackOffsets.forEach((offset) => tryAdd(answer + offset));
+
+        if (String(answer).length === 2) {
+          const reversed = Number(String(answer).split("").reverse().join(""));
+          tryAdd(reversed);
+        }
+
+        let safety = 0;
+        while (wrongOptions.length < count - 1 && safety < 80) {
+          const offset = Math.floor(Math.random() * 15) - 7;
+          tryAdd(answer + (offset === 0 ? 4 : offset));
+          safety += 1;
+        }
+
+        return shuffle([String(answer), ...wrongOptions.slice(0, count - 1).map(String)]);
+      }
+
+      function buildSymbolChoices(answer, seedOptions, count = 4) {
+        const symbolPool = ["▲", "●", "■", "★", "☆", "◆"];
+        const options = new Set([answer, ...(seedOptions || [])]);
+        symbolPool.forEach((symbol) => {
+          if (options.size < count) options.add(symbol);
+        });
+        return shuffle(Array.from(options).slice(0, count));
+      }
+
+      function buildSequenceChoices(answer, min, max) {
+        return buildChoices(answer, min, max, 4, [
+          answer - 1,
+          answer + 1,
+          answer - 2,
+          answer + 2,
+          answer - 3,
+          answer + 3
+        ]);
+      }
+
+      function buildAdditionChoices(left, right, min, max) {
+        const answer = left + right;
+        const droppedCarry = (Math.floor(left / 10) + Math.floor(right / 10)) * 10 + ((left % 10) + (right % 10)) % 10;
+        return buildChoices(answer, min, max, 4, [
+          answer - 1,
+          answer + 1,
+          answer - 2,
+          answer + 2,
+          Math.abs(left - right),
+          droppedCarry,
+          answer - 10,
+          answer + 10
+        ]);
+      }
+
+      function buildSubtractionChoices(left, right, min, max) {
+        const answer = left - right;
+        const borrowMiss = (Math.floor(left / 10) - Math.floor(right / 10)) * 10 + Math.abs((left % 10) - (right % 10));
+        return buildChoices(answer, min, max, 4, [
+          answer - 1,
+          answer + 1,
+          answer - 2,
+          answer + 2,
+          left + right,
+          borrowMiss,
+          answer - 10,
+          answer + 10
+        ]);
       }
 
       function buildWaterQuestionBank() {
@@ -1906,7 +2564,7 @@
             title: "水道場：100 內順序",
             line: numbers.map((num, i) => i === gapIndex ? "?" : String(num)).join(" "),
             helper: "? 係咩",
-            options: buildChoices(answer, 1, 100, 2),
+            options: buildSequenceChoices(answer, 1, 100),
             answer: String(answer)
           });
         });
@@ -1922,7 +2580,7 @@
             title: "水道場：100 內倒序",
             line: numbers.map((num, i) => i === gapIndex ? "?" : String(num)).join(" "),
             helper: "? 係咩",
-            options: buildChoices(answer, 1, 100, 2),
+            options: buildSequenceChoices(answer, 1, 100),
             answer: String(answer)
           });
         });
@@ -1977,7 +2635,7 @@
           title: "火道場：圖案邏輯推理",
           line,
           helper: "下一個圖案係邊個？",
-          options: shuffle(options),
+          options: buildSymbolChoices(answer, options, 4),
           answer
         }));
       }
@@ -1994,7 +2652,7 @@
           title: "木道場：單位數加法",
           prompt: `${left} + ${right} = ?`,
           helper: "計啱就可以用草系慢慢磨血",
-          options: buildChoices(left + right, 0, 18, 4),
+          options: buildAdditionChoices(left, right, 0, 18),
           answer: String(left + right)
         }));
       }
@@ -2011,7 +2669,7 @@
           title: "電道場：單位數減法",
           prompt: `${left} - ${right} = ?`,
           helper: "小心答錯會被電返轉頭",
-          options: buildChoices(left - right, 0, 9, 4),
+          options: buildSubtractionChoices(left, right, 0, 9),
           answer: String(left - right)
         }));
       }
@@ -2032,7 +2690,7 @@
             title: "暗道場：雙位數加法",
             prompt: `${left} + ${right} = ?`,
             helper: "百變怪題型會忽然變快",
-            options: buildChoices(left + right, 20, 180, 4),
+            options: buildAdditionChoices(left, right, 20, 180),
             answer: String(left + right)
           })),
           ...diffs.map(([left, right], index) => ({
@@ -2040,7 +2698,7 @@
             title: "暗道場：雙位數減法",
             prompt: `${left} - ${right} = ?`,
             helper: "百變怪題型會忽然變快",
-            options: buildChoices(left - right, 0, 99, 4),
+            options: buildSubtractionChoices(left, right, 0, 99),
             answer: String(left - right)
           }))
         ];
@@ -2077,6 +2735,7 @@
         battleScreen.classList.add("hidden");
         resultScreen.classList.add("hidden");
         screen.classList.remove("hidden");
+        syncScreenMusic(screen);
       }
 
       function updateBallRow() {
@@ -2158,6 +2817,15 @@
         return "hp-fill";
       }
 
+      function getProjectedDamage(attacker, defender) {
+        return clampHp(Math.round(attacker.attack * getTypeMultiplier(attacker.type, defender.type)));
+      }
+
+      function isNearFaint(target, attacker) {
+        if (!target || !attacker) return false;
+        return target.hp > 0 && target.hp <= getProjectedDamage(attacker, target);
+      }
+
       function getOpponentFromGym(gym) {
         const pokemon = getPokemonById(gym.opponentId);
         return {
@@ -2200,6 +2868,9 @@
         opponentHpText.textContent = `HP ${state.opponent.hp} / ${state.opponent.maxHp}`;
         opponentHpFill.className = hpClass(state.opponent.hp, state.opponent.maxHp);
         opponentHpFill.style.width = `${(state.opponent.hp / state.opponent.maxHp) * 100}%`;
+
+        playerSpriteWrap.classList.toggle("near-faint", isNearFaint(state.player, state.opponent));
+        opponentSpriteWrap.classList.toggle("near-faint", isNearFaint(state.opponent, state.player));
 
         renderQuestion();
       }
@@ -2275,14 +2946,86 @@
         };
       }
 
+      function mixPathPoint(path, ratio, offsetX = 0, offsetY = 0) {
+        return {
+          x: path.startXValue + (path.endXValue - path.startXValue) * ratio + offsetX,
+          y: path.startYValue + (path.endYValue - path.startYValue) * ratio + offsetY
+        };
+      }
+
+      function getEffectMotionPoints(type, fromPlayer, path, variant = 0) {
+        const distanceY = Math.abs(path.endYValue - path.startYValue);
+        const distanceX = Math.abs(path.endXValue - path.startXValue);
+        const drift = Math.max(44, Math.min(118, distanceY * 0.22 + distanceX * 0.3));
+        const swayA = drift * (fromPlayer ? -1 : 1);
+        const swayB = drift * (fromPlayer ? 1 : -1);
+        const wave = Math.max(34, Math.min(86, distanceY * 0.14));
+        const shift = (variant - 1.5) * 16;
+
+        switch (type) {
+          case "electric":
+            return {
+              p1: mixPathPoint(path, 0.24, swayA * 0.86 + shift, -distanceY * 0.02),
+              p2: mixPathPoint(path, 0.48, swayB * 0.72 - shift, 0),
+              p3: mixPathPoint(path, 0.72, swayA * 0.58 + shift * 0.75, distanceY * 0.02)
+            };
+          case "fire":
+            return {
+              p1: mixPathPoint(path, 0.36, swayA * 0.62 + shift, -distanceY * 0.12),
+              p2: mixPathPoint(path, 0.7, swayB * 0.34 - shift * 0.65, -distanceY * 0.06),
+              p3: mixPathPoint(path, 0.86, swayA * 0.14, -distanceY * 0.02)
+            };
+          case "water":
+            return {
+              p1: mixPathPoint(path, 0.22, swayA * 0.56 + shift, wave * 0.18),
+              p2: mixPathPoint(path, 0.52, swayB * 0.52 - shift, -wave * 0.14),
+              p3: mixPathPoint(path, 0.8, swayA * 0.34 + shift * 0.6, wave * 0.12)
+            };
+          case "grass":
+            return {
+              p1: mixPathPoint(path, 0.2, swayA * 0.42 + shift, wave * 0.16),
+              p2: mixPathPoint(path, 0.5, swayB * 0.64 - shift, -wave * 0.12),
+              p3: mixPathPoint(path, 0.82, swayA * 0.5 + shift * 0.5, wave * 0.16)
+            };
+          case "dark":
+            return {
+              p1: mixPathPoint(path, 0.18, swayA * 0.18 + shift * 0.4, 0),
+              p2: mixPathPoint(path, 0.8, swayB * 0.08, 0),
+              p3: mixPathPoint(path, 0.96, swayB * 0.12, 0)
+            };
+          default:
+            return {
+              p1: mixPathPoint(path, 0.3, shift, 0),
+              p2: mixPathPoint(path, 0.6, -shift, 0),
+              p3: mixPathPoint(path, 0.82, shift * 0.4, 0)
+            };
+        }
+      }
+
+      function applyEffectPathVars(node, path, points) {
+        node.style.setProperty("--sx", path.startX);
+        node.style.setProperty("--sy", path.startY);
+        node.style.setProperty("--ex", path.endX);
+        node.style.setProperty("--ey", path.endY);
+        node.style.setProperty("--p1x", px(points.p1.x));
+        node.style.setProperty("--p1y", px(points.p1.y));
+        node.style.setProperty("--p2x", px(points.p2.x));
+        node.style.setProperty("--p2y", px(points.p2.y));
+        node.style.setProperty("--p3x", px(points.p3.x));
+        node.style.setProperty("--p3y", px(points.p3.y));
+      }
+
       function spawnEffect(attacker, fromPlayer) {
         effectLayer.innerHTML = "";
         const icons = attacker.effect || ["✦"];
         const mainIcon = icons[0] || "✦";
         const typeClass = attacker.type ? ` type-${attacker.type}` : "";
+        const motionClass = attacker.type ? ` motion-${attacker.type}` : "";
         const path = getEffectPath(fromPlayer);
         const deltaX = path.endXValue - path.startXValue;
         const deltaY = path.endYValue - path.startYValue;
+        const mainPoints = getEffectMotionPoints(attacker.type, fromPlayer, path, 0);
+
         const launch = document.createElement("div");
         launch.className = `effect launch${typeClass}`;
         launch.textContent = mainIcon;
@@ -2291,44 +3034,76 @@
         effectLayer.appendChild(launch);
 
         const boltMain = document.createElement("div");
-        boltMain.className = `effect bolt${typeClass}`;
+        boltMain.className = `effect bolt${typeClass}${motionClass}`;
         boltMain.textContent = mainIcon;
-        boltMain.style.setProperty("--sx", path.startX);
-        boltMain.style.setProperty("--sy", path.startY);
-        boltMain.style.setProperty("--ex", path.endX);
-        boltMain.style.setProperty("--ey", path.endY);
+        applyEffectPathVars(boltMain, path, mainPoints);
         effectLayer.appendChild(boltMain);
 
         for (let i = 0; i < 3; i += 1) {
           const boltEcho = document.createElement("div");
-          boltEcho.className = `effect bolt echo${typeClass}`;
+          boltEcho.className = `effect bolt echo${typeClass}${motionClass}`;
           boltEcho.textContent = icons[(i + 1) % icons.length] || mainIcon;
-          boltEcho.style.setProperty("--sx", px(path.startXValue + (i - 1) * 16));
-          boltEcho.style.setProperty("--sy", px(path.startYValue + (fromPlayer ? 10 : -10) * i));
-          boltEcho.style.setProperty("--ex", px(path.endXValue + (i - 1) * 10));
-          boltEcho.style.setProperty("--ey", px(path.endYValue - (fromPlayer ? 10 : -10) * i));
+          const echoPath = {
+            ...path,
+            startX: px(path.startXValue + (i - 1) * 16),
+            startY: px(path.startYValue + (fromPlayer ? 10 : -10) * i),
+            endX: px(path.endXValue + (i - 1) * 10),
+            endY: px(path.endYValue - (fromPlayer ? 10 : -10) * i),
+            startXValue: path.startXValue + (i - 1) * 16,
+            startYValue: path.startYValue + (fromPlayer ? 10 : -10) * i,
+            endXValue: path.endXValue + (i - 1) * 10,
+            endYValue: path.endYValue - (fromPlayer ? 10 : -10) * i
+          };
+          applyEffectPathVars(boltEcho, echoPath, getEffectMotionPoints(attacker.type, fromPlayer, echoPath, i));
           boltEcho.style.animationDelay = `${i * 55}ms`;
           effectLayer.appendChild(boltEcho);
         }
 
         const trail = document.createElement("div");
-        trail.className = `effect trail${typeClass}`;
+        trail.className = `effect trail${typeClass}${motionClass}`;
         trail.style.setProperty("--tx", px(path.startXValue + deltaX * 0.5));
         trail.style.setProperty("--sy", px(path.startYValue + deltaY * 0.18));
         trail.style.setProperty("--ey", px(path.endYValue - deltaY * 0.1));
+        trail.style.setProperty("--sx", path.startX);
+        trail.style.setProperty("--ex", path.endX);
+        trail.style.setProperty("--p1x", px(mainPoints.p1.x));
+        trail.style.setProperty("--p1y", px(mainPoints.p1.y));
+        trail.style.setProperty("--p2x", px(mainPoints.p2.x));
+        trail.style.setProperty("--p2y", px(mainPoints.p2.y));
+        trail.style.setProperty("--p3x", px(mainPoints.p3.x));
+        trail.style.setProperty("--p3y", px(mainPoints.p3.y));
         effectLayer.appendChild(trail);
 
         for (let i = 0; i < (fromPlayer ? 4 : 6); i += 1) {
           const spark = document.createElement("div");
-          spark.className = `effect shot${typeClass}`;
+          spark.className = `effect shot${typeClass}${motionClass}`;
           spark.textContent = icons[i % icons.length];
           const spread = fromPlayer ? 14 : 18;
-          spark.style.setProperty("--sx", px(path.startXValue + (i - ((fromPlayer ? 4 : 6) - 1) / 2) * spread));
-          spark.style.setProperty("--sy", px(path.startYValue + (fromPlayer ? 4 : -4) * i));
-          spark.style.setProperty("--ex", px(path.endXValue + (i - ((fromPlayer ? 4 : 6) - 1) / 2) * 10));
-          spark.style.setProperty("--ey", px(path.endYValue - (fromPlayer ? 6 : -6) * i));
+          const sparkPath = {
+            ...path,
+            startX: px(path.startXValue + (i - ((fromPlayer ? 4 : 6) - 1) / 2) * spread),
+            startY: px(path.startYValue + (fromPlayer ? 4 : -4) * i),
+            endX: px(path.endXValue + (i - ((fromPlayer ? 4 : 6) - 1) / 2) * 10),
+            endY: px(path.endYValue - (fromPlayer ? 6 : -6) * i),
+            startXValue: path.startXValue + (i - ((fromPlayer ? 4 : 6) - 1) / 2) * spread,
+            startYValue: path.startYValue + (fromPlayer ? 4 : -4) * i,
+            endXValue: path.endXValue + (i - ((fromPlayer ? 4 : 6) - 1) / 2) * 10,
+            endYValue: path.endYValue - (fromPlayer ? 6 : -6) * i
+          };
+          applyEffectPathVars(spark, sparkPath, getEffectMotionPoints(attacker.type, fromPlayer, sparkPath, i));
           spark.style.animationDelay = `${i * (fromPlayer ? 48 : 45)}ms`;
           effectLayer.appendChild(spark);
+        }
+
+        if (attacker.type === "dark") {
+          setTimeout(() => {
+            const dashImpact = document.createElement("div");
+            dashImpact.className = `effect impact${typeClass}`;
+            dashImpact.textContent = "💥";
+            dashImpact.style.setProperty("--ix", px(mainPoints.p2.x));
+            dashImpact.style.setProperty("--iy", px(mainPoints.p2.y));
+            effectLayer.appendChild(dashImpact);
+          }, 240);
         }
 
         setTimeout(() => {
@@ -2345,16 +3120,33 @@
       }
 
       function finishBattle(title, text, canRetry) {
+        if (battleReturnTimer) {
+          clearTimeout(battleReturnTimer);
+          battleReturnTimer = null;
+        }
         resultTitle.textContent = title;
         resultText.textContent = text;
         playAgainBtn.textContent = canRetry ? "再挑戰同一道場" : "返回地圖";
         backToSelectionBtn.textContent = canRetry ? "返回道場地圖" : "重新揀寶可夢";
         showScreen(resultScreen);
+        battleReturnTimer = setTimeout(() => {
+          battleReturnTimer = null;
+          if (!state.selectedPokemon) {
+            resetToSelection();
+            return;
+          }
+          renderMap();
+          showScreen(mapScreen);
+        }, 1400);
       }
 
       function startGym(gymId) {
         const gym = getGymById(gymId);
         if (!gym || gym.locked || !isGymUnlocked(gym) || !state.selectedPokemon) return;
+        if (battleReturnTimer) {
+          clearTimeout(battleReturnTimer);
+          battleReturnTimer = null;
+        }
 
         state.currentGym = gym;
         state.questionPools[gym.id] = createQuestionPoolForGym(gym);
@@ -2375,6 +3167,7 @@
 
       function submitAnswer() {
         if (!state.selectedAnswer) return;
+        ensureAudioContext();
 
         const isCorrect = state.selectedAnswer === state.currentQuestion.answer;
         const attackerWrap = isCorrect ? playerSpriteWrap : opponentSpriteWrap;
@@ -2387,8 +3180,11 @@
           feedbackBox.textContent = `${state.player.name} 攻擊成功！${getBattleHint(state.player.type, state.opponent.type, state.player.name)}`;
           attackerWrap.classList.add("attack");
           setTimeout(() => {
+            playAttackSound(state.player.type);
             spawnEffect(state.player, true);
             defenderWrap.classList.add("hit");
+            showDamageStamp(defenderWrap, damage);
+            playHitSound();
           }, 180);
           setTimeout(() => attackerWrap.classList.remove("attack"), 420);
           setTimeout(() => defenderWrap.classList.remove("hit"), 760);
@@ -2399,8 +3195,11 @@
           feedbackBox.textContent = `${state.opponent.name} 反擊成功！${getBattleHint(state.opponent.type, state.player.type, state.opponent.name)}`;
           attackerWrap.classList.add("attack");
           setTimeout(() => {
+            playAttackSound(state.opponent.type);
             spawnEffect(state.opponent, false);
             defenderWrap.classList.add("hit");
+            showDamageStamp(defenderWrap, damage);
+            playHitSound();
           }, 180);
           setTimeout(() => attackerWrap.classList.remove("attack"), 420);
           setTimeout(() => defenderWrap.classList.remove("hit"), 760);
@@ -2436,17 +3235,25 @@
 
         setTimeout(() => {
           renderBattle();
-        }, 680);
+        }, 2680);
       }
 
       function goToMap() {
         if (!state.selectedPokemon) return;
+        if (battleReturnTimer) {
+          clearTimeout(battleReturnTimer);
+          battleReturnTimer = null;
+        }
         closePokemonModal();
         renderMap();
         showScreen(mapScreen);
       }
 
       function resetToSelection() {
+        if (battleReturnTimer) {
+          clearTimeout(battleReturnTimer);
+          battleReturnTimer = null;
+        }
         state.selectedPokemon = null;
         state.currentGym = null;
         state.currentQuestion = null;
@@ -2464,7 +3271,12 @@
       updateBallRow();
       showScreen(coverScreen);
 
-      entryBtn.addEventListener("click", () => showScreen(selectionScreen));
+      document.addEventListener("pointerdown", playCurrentMusic, { once: true });
+
+      entryBtn.addEventListener("click", () => {
+        playUiSelect();
+        showScreen(selectionScreen);
+      });
       startAdventureBtn.addEventListener("click", goToMap);
       closeModalBtn.addEventListener("click", closePokemonModal);
       chooseAnotherBtn.addEventListener("click", closePokemonModal);
