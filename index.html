@@ -938,9 +938,7 @@
         position: relative;
         padding: 20px;
         overflow: hidden;
-        background:
-          radial-gradient(circle at center, rgba(255, 255, 255, 0.03), transparent 55%),
-          linear-gradient(180deg, rgba(9, 18, 36, 0.94) 0%, rgba(5, 10, 22, 0.98) 100%);
+        background: linear-gradient(180deg, rgba(9, 18, 36, 0.96) 0%, rgba(5, 10, 22, 0.98) 100%);
       }
 
       .battle-card::before {
@@ -948,85 +946,244 @@
         position: absolute;
         inset: 0;
         background:
-          linear-gradient(135deg, rgba(255, 255, 255, 0.04), transparent 40%),
-          radial-gradient(circle at center, rgba(255, 255, 255, 0.03), transparent 55%);
+          linear-gradient(135deg, rgba(255, 255, 255, 0.05), transparent 34%),
+          repeating-linear-gradient(
+            0deg,
+            rgba(255, 255, 255, 0.02) 0 2px,
+            rgba(0, 0, 0, 0) 2px 18px
+          );
         pointer-events: none;
       }
 
-      .battle-card.arena-electric {
+      .arena-stage {
+        position: absolute;
+        inset: 18px 18px 18px 18px;
+        border: 4px solid rgba(255, 255, 255, 0.78);
+        overflow: hidden;
+        z-index: 0;
+        background: #11192c;
+      }
+
+      .arena-half {
+        position: absolute;
+        left: 0;
+        width: 100%;
+        height: 50%;
+      }
+
+      .arena-half.top {
+        top: 0;
+      }
+
+      .arena-half.bottom {
+        bottom: 0;
+      }
+
+      .arena-half::before,
+      .arena-half::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+
+      .arena-half.type-electric {
         background:
-          linear-gradient(180deg, rgba(57, 111, 186, 0.28), rgba(22, 49, 94, 0.16)),
           repeating-linear-gradient(
             90deg,
-            rgba(151, 197, 255, 0.16) 0 28px,
-            rgba(66, 116, 188, 0.16) 28px 56px
+            #5d88bb 0 22px,
+            #4f79a9 22px 44px
           ),
           repeating-linear-gradient(
             0deg,
-            rgba(255, 255, 255, 0.08) 0 28px,
-            rgba(0, 0, 0, 0.08) 28px 56px
+            rgba(255, 255, 255, 0.1) 0 22px,
+            rgba(0, 0, 0, 0.08) 22px 44px
           ),
-          linear-gradient(180deg, #356db3 0%, #224776 48%, #122842 100%);
+          linear-gradient(180deg, #7ea5d3 0%, #466c99 100%);
       }
 
-      .battle-card.arena-water {
+      .arena-half.type-electric::after {
         background:
-          radial-gradient(circle at 22% 18%, rgba(255, 255, 255, 0.22), transparent 14%),
           repeating-linear-gradient(
             90deg,
-            rgba(214, 244, 255, 0.16) 0 34px,
-            rgba(94, 184, 226, 0.16) 34px 68px
+            rgba(220, 236, 255, 0.2) 0 4px,
+            rgba(0, 0, 0, 0) 4px 44px
+          );
+        opacity: 0.45;
+      }
+
+      .arena-half.type-water {
+        background:
+          repeating-linear-gradient(
+            90deg,
+            #a5e8f8 0 26px,
+            #79d4ee 26px 52px
           ),
           repeating-linear-gradient(
             0deg,
-            rgba(255, 255, 255, 0.12) 0 34px,
-            rgba(57, 140, 193, 0.12) 34px 68px
+            rgba(255, 255, 255, 0.28) 0 3px,
+            rgba(0, 0, 0, 0) 3px 26px
           ),
-          linear-gradient(180deg, #7bd7f4 0%, #40b4db 45%, #17719b 100%);
-      }
-
-      .battle-card.arena-fire {
-        background:
-          radial-gradient(circle at 50% 84%, rgba(255, 200, 84, 0.28), transparent 20%),
-          repeating-linear-gradient(
-            125deg,
-            rgba(255, 87, 34, 0.3) 0 12px,
-            rgba(47, 18, 13, 0) 12px 64px
-          ),
-          repeating-linear-gradient(
-            55deg,
-            rgba(255, 170, 72, 0.22) 0 10px,
-            rgba(24, 12, 12, 0) 10px 72px
-          ),
-          linear-gradient(180deg, #2c0c09 0%, #47120d 34%, #1f0b09 100%);
-      }
-
-      .battle-card.arena-grass {
-        background:
-          radial-gradient(circle at 20% 18%, rgba(255, 255, 255, 0.12), transparent 18%),
           repeating-linear-gradient(
             90deg,
-            rgba(217, 255, 186, 0.12) 0 26px,
-            rgba(127, 203, 95, 0.12) 26px 52px
+            rgba(255, 255, 255, 0.28) 0 3px,
+            rgba(0, 0, 0, 0) 3px 26px
           ),
+          linear-gradient(180deg, #6dd2ef 0%, #278bb6 100%);
+      }
+
+      .arena-half.type-water::after {
+        background:
+          radial-gradient(circle at 18% 36%, rgba(255, 255, 255, 0.22), transparent 0 22px),
+          radial-gradient(circle at 76% 58%, rgba(255, 255, 255, 0.16), transparent 0 18px);
+        opacity: 0.7;
+      }
+
+      .arena-half.type-fire {
+        background:
+          repeating-linear-gradient(
+            90deg,
+            #401313 0 24px,
+            #2f0d0d 24px 48px
+          ),
+          linear-gradient(180deg, #65211a 0%, #2a0f0c 100%);
+      }
+
+      .arena-half.type-fire::before {
+        background:
+          linear-gradient(135deg, rgba(255, 158, 69, 0.2), rgba(0, 0, 0, 0) 28%),
           repeating-linear-gradient(
             115deg,
-            rgba(255, 233, 148, 0.12) 0 18px,
-            rgba(0, 0, 0, 0) 18px 80px
-          ),
-          linear-gradient(180deg, #7fd05a 0%, #4d9d45 44%, #2c6d2f 100%);
+            #ffb143 0 10px,
+            #ff6f31 10px 20px,
+            #631f10 20px 38px,
+            #1f0a09 38px 74px
+          );
+        mix-blend-mode: screen;
+        opacity: 0.72;
       }
 
-      .battle-card.arena-dark {
+      .arena-half.type-fire::after {
         background:
-          radial-gradient(circle at 18% 20%, rgba(152, 205, 129, 0.1), transparent 18%),
-          radial-gradient(circle at 82% 24%, rgba(117, 171, 92, 0.08), transparent 16%),
+          radial-gradient(circle at 22% 76%, rgba(255, 216, 120, 0.45), transparent 0 26px),
+          radial-gradient(circle at 74% 62%, rgba(255, 124, 61, 0.38), transparent 0 20px);
+      }
+
+      .arena-half.type-grass {
+        background:
+          linear-gradient(180deg, #84cf61 0%, #4c993b 100%);
+      }
+
+      .arena-half.type-grass::before {
+        background:
           repeating-linear-gradient(
             90deg,
-            rgba(46, 77, 42, 0.18) 0 30px,
-            rgba(27, 47, 24, 0.18) 30px 60px
+            rgba(194, 240, 136, 0.45) 0 12px,
+            rgba(103, 175, 67, 0.0) 12px 24px
           ),
-          linear-gradient(180deg, #1c3520 0%, #132517 48%, #0d1c10 100%);
+          repeating-linear-gradient(
+            120deg,
+            rgba(255, 233, 138, 0.16) 0 10px,
+            rgba(0, 0, 0, 0) 10px 52px
+          );
+      }
+
+      .arena-half.type-grass::after {
+        background:
+          radial-gradient(circle at 16% 82%, rgba(255, 245, 186, 0.3), transparent 0 18px),
+          radial-gradient(circle at 74% 72%, rgba(255, 245, 186, 0.22), transparent 0 16px);
+      }
+
+      .arena-half.type-dark {
+        background:
+          linear-gradient(180deg, #24442b 0%, #132717 100%);
+      }
+
+      .arena-half.type-dark::before {
+        background:
+          repeating-linear-gradient(
+            90deg,
+            rgba(40, 72, 42, 0.85) 0 18px,
+            rgba(26, 47, 27, 0.85) 18px 36px
+          ),
+          radial-gradient(circle at 14% 22%, rgba(168, 205, 134, 0.12), transparent 0 18px),
+          radial-gradient(circle at 78% 38%, rgba(168, 205, 134, 0.08), transparent 0 16px);
+      }
+
+      .arena-half.type-dark::after {
+        background:
+          linear-gradient(180deg, rgba(0, 0, 0, 0.16), rgba(0, 0, 0, 0.42)),
+          repeating-linear-gradient(
+            90deg,
+            rgba(15, 28, 15, 0.0) 0 30px,
+            rgba(11, 20, 12, 0.24) 30px 34px
+          );
+      }
+
+      .arena-divider {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 50%;
+        height: 10px;
+        transform: translateY(-50%);
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(212, 222, 255, 0.9));
+        border-top: 3px solid #101820;
+        border-bottom: 3px solid #101820;
+        box-shadow: 0 0 0 3px rgba(9, 16, 31, 0.38);
+        z-index: 1;
+      }
+
+      .arena-pokeball {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 96px;
+        height: 96px;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        border: 5px solid #101820;
+        background:
+          linear-gradient(180deg, #ed576b 0 48%, #ffffff 48% 100%);
+        box-shadow:
+          0 0 0 6px rgba(255, 255, 255, 0.3),
+          0 10px 22px rgba(0, 0, 0, 0.28);
+        z-index: 2;
+      }
+
+      .arena-pokeball::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 50%;
+        height: 10px;
+        transform: translateY(-50%);
+        background: #101820;
+      }
+
+      .arena-pokeball::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 26px;
+        height: 26px;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        background: #ffffff;
+        border: 5px solid #101820;
+        box-shadow: inset 0 0 0 4px rgba(214, 227, 255, 0.8);
+      }
+
+      .battle-card > * {
+        position: relative;
+        z-index: 2;
+      }
+
+      .battle-card > .arena-stage {
+        z-index: 0;
       }
 
       .fighter {
@@ -1081,6 +1238,56 @@
 
       .hp-fill.critical {
         background: #ff385c;
+      }
+
+      .battle-record {
+        margin-top: 12px;
+        width: fit-content;
+        min-width: 198px;
+        padding: 10px 14px;
+        border: 2px solid rgba(255, 255, 255, 0.72);
+        background: rgba(7, 14, 28, 0.46);
+        backdrop-filter: blur(4px);
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.22);
+      }
+
+      .battle-record-title {
+        font-size: 13px;
+        font-weight: 900;
+        color: #d9e4ff;
+        letter-spacing: 0.6px;
+      }
+
+      .battle-record-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+        margin-top: 8px;
+      }
+
+      .battle-record-item {
+        display: grid;
+        gap: 3px;
+      }
+
+      .battle-record-label {
+        font-size: 12px;
+        color: #c7d6ff;
+        font-weight: 800;
+      }
+
+      .battle-record-value {
+        font-size: 24px;
+        font-weight: 900;
+        line-height: 1;
+      }
+
+      .battle-record-value.good {
+        color: #7ff0a0;
+      }
+
+      .battle-record-value.bad {
+        color: #ff9ca8;
       }
 
       .vs-row {
@@ -2105,6 +2312,12 @@
           </div>
 
           <div class="panel battle-card">
+            <div class="arena-stage" aria-hidden="true">
+              <div class="arena-half top type-electric" id="arenaTop"></div>
+              <div class="arena-half bottom type-electric" id="arenaBottom"></div>
+              <div class="arena-divider"></div>
+              <div class="arena-pokeball"></div>
+            </div>
             <div class="effect-layer" id="effectLayer"></div>
             <div class="fighter">
               <div>
@@ -2114,6 +2327,19 @@
               <div class="hp-box" id="opponentHpText">HP 100 / 100</div>
             </div>
             <div class="hp-bar"><div class="hp-fill" id="opponentHpFill"></div></div>
+            <div class="battle-record">
+              <div class="battle-record-title">戰鬥紀錄</div>
+              <div class="battle-record-grid">
+                <div class="battle-record-item">
+                  <div class="battle-record-label">答啱</div>
+                  <div class="battle-record-value good" id="correctCount">0</div>
+                </div>
+                <div class="battle-record-item">
+                  <div class="battle-record-label">答錯</div>
+                  <div class="battle-record-value bad" id="wrongCount">0</div>
+                </div>
+              </div>
+            </div>
 
             <div class="sprite-wrap" id="opponentSpriteWrap">
               <img id="opponentSprite" src="" alt="對手寶可夢">
@@ -2349,6 +2575,8 @@
         currentQuestion: null,
         selectedAnswer: null,
         questionIndex: 0,
+        correctCount: 0,
+        wrongCount: 0,
         totalQuestions: 6,
         badges: 0,
         player: null,
@@ -2397,9 +2625,13 @@
       const playerSpriteWrap = document.getElementById("playerSpriteWrap");
       const effectLayer = document.getElementById("effectLayer");
       const battleCard = document.querySelector(".battle-card");
+      const arenaTop = document.getElementById("arenaTop");
+      const arenaBottom = document.getElementById("arenaBottom");
 
       const progressPanel = document.getElementById("progressPanel");
       const scorePanel = document.getElementById("scorePanel");
+      const correctCount = document.getElementById("correctCount");
+      const wrongCount = document.getElementById("wrongCount");
       const questionHead = document.getElementById("questionHead");
       const questionMain = document.getElementById("questionMain");
       const sequenceLine = document.getElementById("sequenceLine");
@@ -3113,6 +3345,27 @@
         return clampHp(Math.round(attacker.attack * getTypeMultiplier(attacker.type, defender.type)));
       }
 
+      function rollAttackPower(attacker) {
+        const maxAttack = Math.max(1, Math.round(attacker.attack));
+        const minAttack = Math.max(1, maxAttack - 2);
+        return Math.floor(Math.random() * (maxAttack - minAttack + 1)) + minAttack;
+      }
+
+      function getBattleDamageResult(attacker, defender) {
+        const rolledAttack = rollAttackPower(attacker);
+        const typeMultiplier = getTypeMultiplier(attacker.type, defender.type);
+        const critical = typeMultiplier === 1.5 && Math.random() < 0.05;
+        const finalMultiplier = critical ? typeMultiplier * 2 : typeMultiplier;
+        const damage = clampHp(Math.round(rolledAttack * finalMultiplier));
+        return {
+          rolledAttack,
+          typeMultiplier,
+          critical,
+          finalMultiplier,
+          damage
+        };
+      }
+
       function isNearFaint(target, attacker) {
         if (!target || !attacker) return false;
         return target.hp > 0 && target.hp <= getProjectedDamage(attacker, target);
@@ -3133,32 +3386,38 @@
         };
       }
 
-      function getBattleHint(attackerType, defenderType, attackerName) {
+      function getBattleHint(attackerType, defenderType, attackerName, critical = false) {
         const multiplier = getTypeMultiplier(attackerType, defenderType);
+        if (critical && multiplier === 1.5) {
+          return `${attackerName} 屬性剋制，仲打出爆擊，今次總傷害 x3`;
+        }
         if (multiplier === 1.5) return `${attackerName} 屬性剋制，今次攻擊 x1.5`;
         if (multiplier === 0.5) return `${attackerName} 被對手剋制，今次攻擊 x0.5`;
         return `${attackerName} 今次屬性平手`;
       }
 
-      function updateBattleArena(type) {
-        if (!battleCard) return;
-        battleCard.classList.remove(
-          "arena-electric",
-          "arena-water",
-          "arena-fire",
-          "arena-grass",
-          "arena-dark"
-        );
-        if (type) {
-          battleCard.classList.add(`arena-${type}`);
-        }
+      function updateBattleArena(opponentType, playerType) {
+        if (!arenaTop || !arenaBottom) return;
+        const typeClasses = [
+          "type-electric",
+          "type-water",
+          "type-fire",
+          "type-grass",
+          "type-dark"
+        ];
+        arenaTop.classList.remove(...typeClasses);
+        arenaBottom.classList.remove(...typeClasses);
+        arenaTop.classList.add(`type-${opponentType || "electric"}`);
+        arenaBottom.classList.add(`type-${playerType || "electric"}`);
       }
 
       function renderBattle() {
         const gym = state.currentGym;
-        updateBattleArena(gym.type);
+        updateBattleArena(state.opponent.type, state.player.type);
         progressPanel.textContent = `${gym.name} ・ 第 ${state.questionIndex + 1} 題 ・ 打爆 HP 先過關`;
         scorePanel.textContent = `徽章 ${state.clearedGyms.length}`;
+        correctCount.textContent = String(state.correctCount);
+        wrongCount.textContent = String(state.wrongCount);
 
         playerName.textContent = state.player.name;
         playerSeries.textContent = `${typeLabels[state.player.type]}屬性 ・ HP ${state.player.hp} ・ 攻擊 ${state.player.attack}`;
@@ -3459,6 +3718,8 @@
         state.questionPools[gym.id] = createQuestionPoolForGym(gym);
         state.totalQuestions = gym.questionCount;
         state.questionIndex = 0;
+        state.correctCount = 0;
+        state.wrongCount = 0;
         state.selectedAnswer = null;
         state.player = {
           ...state.selectedPokemon,
@@ -3481,10 +3742,12 @@
         const defenderWrap = isCorrect ? opponentSpriteWrap : playerSpriteWrap;
 
         if (isCorrect) {
-          const damage = clampHp(Math.round(state.player.attack * getTypeMultiplier(state.player.type, state.opponent.type)));
+          state.correctCount += 1;
+          const damageResult = getBattleDamageResult(state.player, state.opponent);
+          const { rolledAttack, damage, critical } = damageResult;
           state.opponent.hp = clampHp(state.opponent.hp - damage);
           feedbackBox.className = "feedback good";
-          feedbackBox.textContent = `${state.player.name} 攻擊成功！${getBattleHint(state.player.type, state.opponent.type, state.player.name)}`;
+          feedbackBox.textContent = `${state.player.name} 攻擊成功！今次攻擊值 ${rolledAttack}，扣咗 ${damage} HP。${getBattleHint(state.player.type, state.opponent.type, state.player.name, critical)}`;
           attackerWrap.classList.add("attack");
           setTimeout(() => {
             playAttackSound(state.player.type);
@@ -3496,10 +3759,12 @@
           setTimeout(() => attackerWrap.classList.remove("attack"), 420);
           setTimeout(() => defenderWrap.classList.remove("hit"), 760);
         } else {
-          const damage = clampHp(Math.round(state.opponent.attack * getTypeMultiplier(state.opponent.type, state.player.type)));
+          state.wrongCount += 1;
+          const damageResult = getBattleDamageResult(state.opponent, state.player);
+          const { rolledAttack, damage, critical } = damageResult;
           state.player.hp = clampHp(state.player.hp - damage);
           feedbackBox.className = "feedback bad";
-          feedbackBox.textContent = `${state.opponent.name} 反擊成功！${getBattleHint(state.opponent.type, state.player.type, state.opponent.name)}`;
+          feedbackBox.textContent = `${state.opponent.name} 反擊成功！今次攻擊值 ${rolledAttack}，扣咗 ${damage} HP。${getBattleHint(state.opponent.type, state.player.type, state.opponent.name, critical)}`;
           attackerWrap.classList.add("attack");
           setTimeout(() => {
             playAttackSound(state.opponent.type);
