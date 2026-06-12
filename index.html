@@ -560,6 +560,195 @@
         color: #fff4a8;
       }
 
+      .badge-gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 12px;
+        margin-bottom: 18px;
+      }
+
+      .badge-card {
+        padding: 14px 12px;
+        border: 3px solid rgba(255, 255, 255, 0.8);
+        background: linear-gradient(180deg, rgba(11, 24, 46, 0.94), rgba(6, 12, 24, 0.98));
+        text-align: center;
+        box-shadow:
+          inset 0 0 0 2px rgba(255, 255, 255, 0.06),
+          0 12px 22px rgba(0, 0, 0, 0.18);
+      }
+
+      .badge-card.locked {
+        opacity: 0.42;
+        filter: grayscale(1);
+      }
+
+      .badge-card.unlocked {
+        box-shadow:
+          0 0 0 2px rgba(255, 228, 77, 0.18),
+          0 0 26px rgba(255, 228, 77, 0.12),
+          inset 0 0 0 2px rgba(255, 255, 255, 0.08);
+      }
+
+      .badge-medal {
+        --medal-accent: #8ec5ff;
+        --medal-dark: #2f5b90;
+        --medal-glow: rgba(142, 197, 255, 0.55);
+        width: 96px;
+        height: 96px;
+        margin: 0 auto 10px;
+        position: relative;
+        image-rendering: pixelated;
+        filter: drop-shadow(0 10px 16px rgba(0, 0, 0, 0.32));
+      }
+
+      .badge-medal::before,
+      .badge-medal::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+      }
+
+      .badge-medal::before {
+        background:
+          radial-gradient(circle, rgba(255,255,255,0.16) 0 18%, rgba(255,255,255,0) 19% 100%),
+          radial-gradient(circle, var(--medal-glow) 0 54%, rgba(0,0,0,0) 72%);
+        transform: scale(1.08);
+        opacity: 0.9;
+      }
+
+      .badge-medal::after {
+        background:
+          radial-gradient(circle at 50% 30%, rgba(255,255,255,0.14), rgba(255,255,255,0) 38%),
+          linear-gradient(180deg, rgba(24, 34, 56, 0.98), rgba(7, 10, 20, 1) 78%);
+        border: 4px solid rgba(255,255,255,0.86);
+        box-shadow:
+          inset 0 0 0 4px rgba(0, 0, 0, 0.42),
+          0 0 0 4px rgba(10, 18, 34, 0.95),
+          0 0 22px var(--medal-glow);
+      }
+
+      .badge-medal .medal-core {
+        position: absolute;
+        inset: 14px;
+        border-radius: 50%;
+        border: 4px solid var(--medal-accent);
+        background:
+          radial-gradient(circle at 50% 35%, rgba(255,255,255,0.22), rgba(255,255,255,0) 38%),
+          linear-gradient(180deg, rgba(10,16,28,0.94), rgba(4,8,16,0.98));
+        box-shadow:
+          inset 0 0 0 3px rgba(255,255,255,0.06),
+          0 0 16px var(--medal-glow);
+      }
+
+      .badge-medal .medal-icon {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+        font-size: 38px;
+        line-height: 1;
+        text-shadow:
+          0 0 14px var(--medal-glow),
+          0 2px 0 rgba(0, 0, 0, 0.3);
+      }
+
+      .badge-medal .medal-wing {
+        position: absolute;
+        z-index: 1;
+        top: 50%;
+        width: 20px;
+        height: 34px;
+        margin-top: -17px;
+        background:
+          linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0)),
+          linear-gradient(180deg, var(--medal-accent), var(--medal-dark));
+        border: 3px solid rgba(255,255,255,0.65);
+        box-shadow: 0 0 12px var(--medal-glow);
+      }
+
+      .badge-medal .medal-wing.left {
+        left: 10px;
+        clip-path: polygon(100% 0, 24% 20%, 0 50%, 24% 80%, 100% 100%, 72% 50%);
+      }
+
+      .badge-medal .medal-wing.right {
+        right: 10px;
+        clip-path: polygon(0 0, 76% 20%, 100% 50%, 76% 80%, 0 100%, 28% 50%);
+      }
+
+      .badge-medal .medal-star {
+        position: absolute;
+        left: 50%;
+        top: 14px;
+        transform: translateX(-50%);
+        z-index: 1;
+        font-size: 14px;
+        color: rgba(255,255,255,0.92);
+        text-shadow: 0 0 12px var(--medal-glow);
+      }
+
+      .badge-medal.type-water {
+        --medal-accent: #86ebff;
+        --medal-dark: #2d79b2;
+        --medal-glow: rgba(110, 214, 255, 0.6);
+      }
+
+      .badge-medal.type-fire {
+        --medal-accent: #ffbf75;
+        --medal-dark: #d64b24;
+        --medal-glow: rgba(255, 120, 77, 0.58);
+      }
+
+      .badge-medal.type-grass {
+        --medal-accent: #c8f68b;
+        --medal-dark: #43a44b;
+        --medal-glow: rgba(111, 223, 112, 0.55);
+      }
+
+      .badge-medal.type-electric {
+        --medal-accent: #fff083;
+        --medal-dark: #d1a826;
+        --medal-glow: rgba(255, 228, 90, 0.58);
+      }
+
+      .badge-medal.type-dark {
+        --medal-accent: #dbc5ff;
+        --medal-dark: #7553c8;
+        --medal-glow: rgba(177, 115, 255, 0.54);
+      }
+
+      .badge-name {
+        font-size: clamp(15px, 3vw, 19px);
+        font-weight: 900;
+        color: #fff7c2;
+      }
+
+      .badge-status {
+        margin-top: 4px;
+        font-size: 13px;
+        font-weight: 800;
+        color: #dce7ff;
+      }
+
+      .badge-record {
+        margin-top: 8px;
+        padding: 8px 10px;
+        border: 2px solid rgba(255, 255, 255, 0.16);
+        background: rgba(255, 255, 255, 0.05);
+        font-size: 12px;
+        line-height: 1.45;
+        color: #fff7d8;
+      }
+
+      .badge-record strong {
+        display: block;
+        margin-bottom: 2px;
+        color: #fff3a2;
+        font-size: 12px;
+      }
+
       .gym-grid {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -957,7 +1146,10 @@
 
       .arena-stage {
         position: absolute;
-        inset: 18px 18px 18px 18px;
+        left: 18px;
+        right: 18px;
+        top: 116px;
+        bottom: 18px;
         border: 4px solid rgba(255, 255, 255, 0.78);
         overflow: hidden;
         z-index: 0;
@@ -1343,6 +1535,30 @@
           drop-shadow(0 14px 22px rgba(0, 0, 0, 0.45));
       }
 
+      .sprite-wrap.charge-prep img {
+        animation: chargePrep 0.2s ease-out forwards;
+        filter:
+          brightness(1.45)
+          drop-shadow(0 0 24px rgba(255, 255, 255, 0.72))
+          drop-shadow(0 14px 22px rgba(0, 0, 0, 0.45));
+      }
+
+      .sprite-wrap.charge.player img {
+        animation: ramChargePlayer 0.58s cubic-bezier(0.2, 0.86, 0.16, 1) forwards;
+        filter:
+          brightness(1.18)
+          drop-shadow(0 0 16px rgba(255, 255, 255, 0.5))
+          drop-shadow(0 14px 22px rgba(0, 0, 0, 0.45));
+      }
+
+      .sprite-wrap.charge.opponent img {
+        animation: ramChargeOpponent 0.58s cubic-bezier(0.2, 0.86, 0.16, 1) forwards;
+        filter:
+          brightness(1.18)
+          drop-shadow(0 0 16px rgba(255, 255, 255, 0.5))
+          drop-shadow(0 14px 22px rgba(0, 0, 0, 0.45));
+      }
+
       .sprite-wrap.hit img {
         animation: defenderShake 0.56s cubic-bezier(0.22, 0.9, 0.2, 1);
         filter:
@@ -1351,11 +1567,28 @@
           drop-shadow(0 14px 22px rgba(0, 0, 0, 0.45));
       }
 
+      .sprite-wrap.dodge img {
+        animation: defenderDodge 0.5s cubic-bezier(0.2, 0.86, 0.18, 1);
+        filter:
+          brightness(1.22)
+          drop-shadow(0 0 18px rgba(170, 225, 255, 0.6))
+          drop-shadow(0 14px 22px rgba(0, 0, 0, 0.45));
+      }
+
       .sprite-wrap.near-faint img {
         animation: nearFaintBlink 0.7s steps(2, end) infinite;
         filter:
           brightness(1.28)
           drop-shadow(0 0 20px rgba(255, 96, 120, 0.5))
+          drop-shadow(0 14px 22px rgba(0, 0, 0, 0.45));
+      }
+
+      .sprite-wrap.intro-player img {
+        animation: playerBattleEntry 1.05s cubic-bezier(0.18, 0.86, 0.2, 1) forwards;
+        transform-origin: center bottom;
+        filter:
+          brightness(1.2)
+          drop-shadow(0 0 20px rgba(255, 255, 255, 0.45))
           drop-shadow(0 14px 22px rgba(0, 0, 0, 0.45));
       }
 
@@ -1383,6 +1616,18 @@
         opacity: 0;
         pointer-events: none;
         animation: damageStamp 1.14s cubic-bezier(0.2, 0.8, 0.22, 1) forwards;
+      }
+
+      .damage-stamp.miss {
+        border-color: rgba(211, 244, 255, 0.62);
+        background: rgba(133, 210, 255, 0.18);
+        color: #f0fbff;
+        box-shadow:
+          0 0 0 3px rgba(133, 210, 255, 0.1),
+          0 12px 22px rgba(0, 0, 0, 0.18);
+        text-shadow:
+          0 2px 10px rgba(39, 119, 186, 0.5),
+          0 0 8px rgba(255, 255, 255, 0.45);
       }
 
       @keyframes damageStamp {
@@ -1414,6 +1659,53 @@
         100% { transform: translateX(0) scale(1); }
       }
 
+      @keyframes defenderDodge {
+        0% { transform: translateX(0) scale(1); }
+        18% { transform: translateX(0) scale(1.04); }
+        42% { transform: translateX(34px) scale(0.98); }
+        64% { transform: translateX(-18px) scale(1.02); }
+        100% { transform: translateX(0) scale(1); }
+      }
+
+      @keyframes chargePrep {
+        0% {
+          transform: scale(1) translateY(0);
+        }
+        100% {
+          transform: scale(1.34) translateY(-10px);
+        }
+      }
+
+      @keyframes ramChargePlayer {
+        0% {
+          transform: scale(1.34) translate(0, -10px);
+        }
+        18% {
+          transform: scale(1.28) translate(0, -8px);
+        }
+        55% {
+          transform: scale(1.08) translate(0, -138px);
+        }
+        100% {
+          transform: scale(0.84) translate(0, -278px);
+        }
+      }
+
+      @keyframes ramChargeOpponent {
+        0% {
+          transform: scale(1.34) translate(0, -10px);
+        }
+        18% {
+          transform: scale(1.28) translate(0, -8px);
+        }
+        55% {
+          transform: scale(1.08) translate(0, 138px);
+        }
+        100% {
+          transform: scale(0.84) translate(0, 278px);
+        }
+      }
+
       @keyframes nearFaintBlink {
         0% {
           opacity: 1;
@@ -1426,6 +1718,33 @@
         100% {
           opacity: 1;
           transform: scale(1);
+        }
+      }
+
+      @keyframes playerBattleEntry {
+        0% {
+          opacity: 0;
+          transform: translate(-180px, 220px) scale(0.38) rotate(-14deg);
+        }
+        24% {
+          opacity: 1;
+          transform: translate(-112px, 72px) scale(0.64) rotate(-9deg);
+        }
+        52% {
+          opacity: 1;
+          transform: translate(-34px, -72px) scale(0.96) rotate(-3deg);
+        }
+        72% {
+          opacity: 1;
+          transform: translate(0, -30px) scale(1.1) rotate(0deg);
+        }
+        86% {
+          opacity: 1;
+          transform: translate(0, 12px) scale(0.96) rotate(0deg);
+        }
+        100% {
+          opacity: 1;
+          transform: translate(0, 0) scale(1) rotate(0deg);
         }
       }
 
@@ -2030,6 +2349,40 @@
         font-weight: 900;
       }
 
+      .result-badge-wrap {
+        margin-top: 22px;
+        padding: 18px 16px;
+        border: 3px solid rgba(255, 255, 255, 0.84);
+        background: linear-gradient(180deg, rgba(9, 20, 40, 0.92), rgba(5, 12, 24, 0.97));
+      }
+
+      .result-badge-title {
+        font-size: 15px;
+        font-weight: 900;
+        color: #ffe44d;
+        letter-spacing: 0.8px;
+      }
+
+      .result-badge-wrap .badge-medal {
+        transform: scale(1.18);
+        margin-top: 8px;
+        margin-bottom: 18px;
+      }
+
+      .result-badge-name {
+        font-size: clamp(22px, 5vw, 34px);
+        font-weight: 900;
+        color: #ffffff;
+      }
+
+      .result-badge-desc {
+        margin-top: 8px;
+        font-size: clamp(16px, 3.6vw, 22px);
+        font-weight: 800;
+        color: #dce7ff;
+        line-height: 1.55;
+      }
+
       .result-actions {
         margin-top: 20px;
         display: grid;
@@ -2178,6 +2531,10 @@
           grid-template-columns: 1fr;
         }
 
+        .arena-stage {
+          top: 148px;
+        }
+
         .hp-box {
           text-align: left;
         }
@@ -2295,11 +2652,13 @@
             <div class="summary-pill" id="badgeCountPill">已贏 0 個道場</div>
           </div>
 
+          <div class="badge-gallery" id="badgeGallery"></div>
+
           <div class="gym-grid" id="gymGrid"></div>
 
           <div class="type-strip">
             <div class="type-note">火 克 木，木 克 水，水 克 電，電 克 暗，暗 克 火。</div>
-            <div class="type-note">屬性剋制時：攻擊 x1.5，受傷 x0.5。被剋制時：攻擊 x0.5，受傷 x1.5。</div>
+            <div class="type-note">屬性剋制時：攻擊 x1.5，另有 5% 機會爆擊到 x2。屬性平手：平時只會用攻擊值浮動 ±2，另外 5% 機會爆擊到 x1.5。被剋制時：攻擊 x0.5。</div>
           </div>
         </div>
       </section>
@@ -2379,6 +2738,12 @@
         <div class="panel result-card">
           <h2 id="resultTitle">完成冒險</h2>
           <p id="resultText">恭喜你完成第一輪數學挑戰。</p>
+          <div class="result-badge-wrap hidden" id="resultBadgeWrap">
+            <div class="result-badge-title" id="resultBadgeTitle">道場徽章</div>
+            <div id="resultBadgeStage"></div>
+            <div class="result-badge-name" id="resultBadgeName">水滴徽章</div>
+            <div class="result-badge-desc" id="resultBadgeDesc">你成功完成道場，拎到第一枚徽章。</div>
+          </div>
           <div class="result-actions">
             <button class="primary-btn" id="playAgainBtn">再玩一次</button>
             <button class="secondary-btn" id="backToSelectionBtn">返回揀寶可夢</button>
@@ -2427,6 +2792,39 @@
         grass: "🌿",
         electric: "⚡",
         dark: "🌙"
+      };
+
+      const badgeMeta = {
+        water: {
+          name: "水滴徽章",
+          icon: "💧",
+          spark: "✦",
+          desc: "代表你征服咗水屬性道場，順序、倒序同大小比較都過晒關。"
+        },
+        fire: {
+          name: "火焰徽章",
+          icon: "🔥",
+          spark: "✦",
+          desc: "代表你征服咗火屬性道場，圖案規律同邏輯推理都頂得住。"
+        },
+        grass: {
+          name: "森林徽章",
+          icon: "🌿",
+          spark: "✦",
+          desc: "代表你征服咗木屬性道場，單位數加法已經好穩陣。"
+        },
+        electric: {
+          name: "雷電徽章",
+          icon: "⚡",
+          spark: "✦",
+          desc: "代表你征服咗電屬性道場，單位數減法又快又準。"
+        },
+        dark: {
+          name: "月影徽章",
+          icon: "🌙",
+          spark: "✦",
+          desc: "代表你征服咗暗屬性道場，雙位數加減都已經撐得住。"
+        }
       };
 
       const advantageMap = {
@@ -2582,7 +2980,15 @@
         player: null,
         opponent: null,
         clearedGyms: [],
-        questionPools: {}
+        questionPools: {},
+        bestRecords: {}
+      };
+
+      const storageKeys = {
+        volume: "pokemon-k2-volume",
+        muted: "pokemon-k2-muted",
+        clearedGyms: "pokemon-k2-cleared-gyms",
+        bestRecords: "pokemon-k2-best-records"
       };
 
       const selectionScreen = document.getElementById("selectionScreen");
@@ -2610,6 +3016,7 @@
       const mapPokemonMeta = document.getElementById("mapPokemonMeta");
       const gymCountPill = document.getElementById("gymCountPill");
       const badgeCountPill = document.getElementById("badgeCountPill");
+      const badgeGallery = document.getElementById("badgeGallery");
 
       const playerName = document.getElementById("playerName");
       const playerSeries = document.getElementById("playerSeries");
@@ -2641,11 +3048,103 @@
       const feedbackBox = document.getElementById("feedbackBox");
       const resultTitle = document.getElementById("resultTitle");
       const resultText = document.getElementById("resultText");
+      const resultBadgeWrap = document.getElementById("resultBadgeWrap");
+      const resultBadgeTitle = document.getElementById("resultBadgeTitle");
+      const resultBadgeStage = document.getElementById("resultBadgeStage");
+      const resultBadgeName = document.getElementById("resultBadgeName");
+      const resultBadgeDesc = document.getElementById("resultBadgeDesc");
       const playAgainBtn = document.getElementById("playAgainBtn");
       const backToSelectionBtn = document.getElementById("backToSelectionBtn");
       const soundToggleBtn = document.getElementById("soundToggleBtn");
       const soundRange = document.getElementById("soundRange");
       const soundValue = document.getElementById("soundValue");
+
+      function readStoredJson(key, fallback) {
+        try {
+          const raw = localStorage.getItem(key);
+          if (!raw) return fallback;
+          const parsed = JSON.parse(raw);
+          return parsed ?? fallback;
+        } catch (error) {
+          return fallback;
+        }
+      }
+
+      function saveStoredJson(key, value) {
+        localStorage.setItem(key, JSON.stringify(value));
+      }
+
+      function getPlayableGymIds() {
+        return gyms.filter((gym) => !gym.locked).map((gym) => gym.id);
+      }
+
+      function hydrateSavedProgress() {
+        const playableGymIds = getPlayableGymIds();
+        const savedCleared = readStoredJson(storageKeys.clearedGyms, []);
+        const savedRecords = readStoredJson(storageKeys.bestRecords, {});
+
+        state.clearedGyms = Array.isArray(savedCleared)
+          ? savedCleared.filter((gymId) => playableGymIds.includes(gymId))
+          : [];
+
+        state.bestRecords = Object.fromEntries(
+          Object.entries(savedRecords || {}).filter(([gymId, record]) => {
+            return playableGymIds.includes(gymId)
+              && record
+              && Number.isFinite(record.correct)
+              && Number.isFinite(record.wrong);
+          })
+        );
+      }
+
+      function saveClearedGyms() {
+        saveStoredJson(storageKeys.clearedGyms, state.clearedGyms);
+      }
+
+      function saveBestRecords() {
+        saveStoredJson(storageKeys.bestRecords, state.bestRecords);
+      }
+
+      function isBetterRecord(nextRecord, currentRecord) {
+        if (!currentRecord) return true;
+        if (nextRecord.wrong < currentRecord.wrong) return true;
+        if (nextRecord.wrong > currentRecord.wrong) return false;
+        if (nextRecord.correct > currentRecord.correct) return true;
+        return false;
+      }
+
+      function updateBestRecord(gymId) {
+        if (!gymId) return;
+        const nextRecord = {
+          correct: state.correctCount,
+          wrong: state.wrongCount
+        };
+        const currentRecord = state.bestRecords[gymId];
+        if (!isBetterRecord(nextRecord, currentRecord)) return;
+        state.bestRecords[gymId] = nextRecord;
+        saveBestRecords();
+      }
+
+      function getBadgeRecordMarkup(gymId, unlocked) {
+        const record = state.bestRecords[gymId];
+        if (!record) {
+          return `
+            <div class="badge-record">
+              <strong>最佳紀錄</strong>
+              ${unlocked ? "等你再創更好成績。" : "等待通關"}
+            </div>
+          `;
+        }
+
+        return `
+          <div class="badge-record">
+            <strong>最佳紀錄</strong>
+            答啱 ${record.correct} 題 ・ 答錯 ${record.wrong} 題
+          </div>
+        `;
+      }
+
+      hydrateSavedProgress();
 
       function randomItem(list) {
         return list[Math.floor(Math.random() * list.length)];
@@ -2670,8 +3169,8 @@
       };
       const baseUiSelectVolume = 0.3;
       const audioSettings = {
-        volume: Math.min(1, Math.max(0, Number(localStorage.getItem("pokemon-k2-volume") || "0.7"))),
-        muted: localStorage.getItem("pokemon-k2-muted") === "1"
+        volume: Math.min(1, Math.max(0, Number(localStorage.getItem(storageKeys.volume) || "0.7"))),
+        muted: localStorage.getItem(storageKeys.muted) === "1"
       };
       Object.values(musicPlayers).forEach((audio) => {
         audio.loop = true;
@@ -2729,8 +3228,8 @@
       }
 
       function saveAudioSettings() {
-        localStorage.setItem("pokemon-k2-volume", String(audioSettings.volume));
-        localStorage.setItem("pokemon-k2-muted", audioSettings.muted ? "1" : "0");
+        localStorage.setItem(storageKeys.volume, String(audioSettings.volume));
+        localStorage.setItem(storageKeys.muted, audioSettings.muted ? "1" : "0");
       }
 
       function getMusicKeyForScreen(screen) {
@@ -2881,7 +3380,13 @@
         source.stop(ctx.currentTime + delay + duration + 0.03);
       }
 
-      function playAttackSound(type) {
+      function playAttackSound(type, skillType = "element") {
+        if (skillType === "ram") {
+          playNoiseBurst({ duration: 0.12, gain: 0.03, lowpass: 900 });
+          playTone({ frequency: 168, endFrequency: 116, duration: 0.18, type: "square", gain: 0.056 });
+          playTone({ frequency: 126, endFrequency: 84, duration: 0.22, delay: 0.05, type: "triangle", gain: 0.044 });
+          return;
+        }
         const soundMap = {
           electric: [
             { frequency: 720, endFrequency: 1240, duration: 0.16, type: "sawtooth", gain: 0.032 },
@@ -2937,6 +3442,28 @@
         setTimeout(() => {
           stamp.remove();
         }, 980);
+      }
+
+      function showMissStamp(targetWrap) {
+        const existing = targetWrap.querySelector(".damage-stamp");
+        if (existing) existing.remove();
+
+        const stamp = document.createElement("div");
+        stamp.className = "damage-stamp miss";
+        stamp.textContent = "MISS / 避開！";
+        targetWrap.appendChild(stamp);
+
+        setTimeout(() => {
+          stamp.remove();
+        }, 980);
+      }
+
+      function getDodgeChance(skillType, typeMultiplier) {
+        if (skillType !== "element") return 0;
+        if (typeMultiplier === 1.5) return 0.03;
+        if (typeMultiplier === 1) return 0.05;
+        if (typeMultiplier === 0.5) return 0.08;
+        return 0;
       }
 
       function getPokemonById(id) {
@@ -3300,7 +3827,8 @@
         const playableGyms = getPlayableGyms();
         const unlockedGymCount = playableGyms.filter((gym) => isGymUnlocked(gym)).length;
         gymCountPill.textContent = `已開放 ${unlockedGymCount} / ${playableGyms.length} 道場`;
-        badgeCountPill.textContent = `已贏 ${state.clearedGyms.length} 個道場`;
+        badgeCountPill.textContent = `已拎 ${state.clearedGyms.length} 個徽章`;
+        renderBadgeGallery();
 
         gymGrid.innerHTML = "";
         gyms.forEach((gym) => {
@@ -3317,7 +3845,7 @@
                 <div class="gym-title">${gym.name}</div>
                 <div class="gym-sub">${typeLabels[gym.type]}屬性 (${gym.leader})</div>
               </div>
-              <div class="gym-badge">${permanentlyLocked ? "待更新" : (canEnter ? `打爆 HP` : "未開放")}</div>
+              <div class="gym-badge">${permanentlyLocked ? "待更新" : (canEnter ? `等待通關` : "未開放")}</div>
             </div>
             <div class="gym-scene">
               <div class="gym-house-wrap">
@@ -3334,6 +3862,46 @@
         });
       }
 
+      function getBadgeInfo(gymType) {
+        return badgeMeta[gymType] || {
+          name: "道場徽章",
+          icon: "✦",
+          spark: "✦",
+          desc: "你已完成一個新道場。"
+        };
+      }
+
+      function createMedalMarkup(type) {
+        const medal = getBadgeInfo(type);
+        return `
+          <div class="badge-medal type-${type}">
+            <span class="medal-wing left"></span>
+            <span class="medal-core"></span>
+            <span class="medal-star">${medal.spark}</span>
+            <span class="medal-icon">${medal.icon}</span>
+            <span class="medal-wing right"></span>
+          </div>
+        `;
+      }
+
+      function renderBadgeGallery() {
+        const badgeGyms = gyms.filter((gym) => !gym.locked);
+        badgeGallery.innerHTML = "";
+        badgeGyms.forEach((gym) => {
+          const unlocked = state.clearedGyms.includes(gym.id);
+          const medal = getBadgeInfo(gym.type);
+          const card = document.createElement("div");
+          card.className = `badge-card ${unlocked ? "unlocked" : "locked"}`;
+          card.innerHTML = `
+            ${createMedalMarkup(gym.type)}
+            <div class="badge-name">${medal.name}</div>
+            <div class="badge-status">${unlocked ? `已獲得 ・ ${gym.name}` : `未獲得 ・ ${gym.name}`}</div>
+            ${getBadgeRecordMarkup(gym.id, unlocked)}
+          `;
+          badgeGallery.appendChild(card);
+        });
+      }
+
       function hpClass(current, max) {
         const ratio = current / max;
         if (ratio <= 0.25) return "hp-fill critical";
@@ -3342,7 +3910,16 @@
       }
 
       function getProjectedDamage(attacker, defender) {
-        return clampHp(Math.round(attacker.attack * getTypeMultiplier(attacker.type, defender.type)));
+        const multiplier = getTypeMultiplier(attacker.type, defender.type);
+        const baseAttack = Math.max(1, Math.round(attacker.attack));
+        const ramDamage = baseAttack;
+        if (multiplier === 1.5) {
+          return clampHp(Math.max(Math.round(baseAttack * 2), ramDamage));
+        }
+        if (multiplier === 1) {
+          return clampHp(Math.max(Math.round((baseAttack + 2) * 1.5), baseAttack + 2, ramDamage));
+        }
+        return clampHp(Math.max(Math.round(baseAttack * multiplier), ramDamage));
       }
 
       function rollAttackPower(attacker) {
@@ -3351,15 +3928,37 @@
         return Math.floor(Math.random() * (maxAttack - minAttack + 1)) + minAttack;
       }
 
+      function rollNeutralAttackPower(attacker) {
+        const baseAttack = Math.max(1, Math.round(attacker.attack));
+        const minAttack = Math.max(1, baseAttack - 2);
+        const maxAttack = baseAttack + 2;
+        return Math.floor(Math.random() * (maxAttack - minAttack + 1)) + minAttack;
+      }
+
       function getBattleDamageResult(attacker, defender) {
-        const rolledAttack = rollAttackPower(attacker);
+        const skillType = Math.random() < 0.2 ? "ram" : "element";
         const typeMultiplier = getTypeMultiplier(attacker.type, defender.type);
-        const critical = typeMultiplier === 1.5 && Math.random() < 0.05;
-        const finalMultiplier = critical ? typeMultiplier * 2 : typeMultiplier;
-        const damage = clampHp(Math.round(rolledAttack * finalMultiplier));
+        const rolledAttack = skillType === "ram"
+          ? rollAttackPower(attacker)
+          : (typeMultiplier === 1 ? rollNeutralAttackPower(attacker) : rollAttackPower(attacker));
+        const dodgeChance = getDodgeChance(skillType, typeMultiplier);
+        const dodged = dodgeChance > 0 && Math.random() < dodgeChance;
+        const critical = skillType === "element" && (typeMultiplier === 1.5 || typeMultiplier === 1) && Math.random() < 0.05;
+        const finalMultiplier = skillType === "ram"
+          ? 1
+          : (
+            typeMultiplier === 1.5
+              ? (critical ? 2 : 1.5)
+              : (typeMultiplier === 1 ? (critical ? 1.5 : 1) : typeMultiplier)
+          );
+        const damage = dodged ? 0 : clampHp(Math.round(rolledAttack * finalMultiplier));
         return {
+          skillType,
+          skillLabel: skillType === "ram" ? "衝撞" : `${typeLabels[attacker.type]}屬性攻擊`,
           rolledAttack,
           typeMultiplier,
+          dodgeChance,
+          dodged,
           critical,
           finalMultiplier,
           damage
@@ -3380,18 +3979,25 @@
           type: gym.type,
           sprite: pokemon.sprite,
           hp: pokemon.hp + 10,
-          attack: pokemon.attack,
+          attack: Math.max(1, pokemon.attack * 2),
           maxHp: pokemon.hp + 10,
           effect: pokemon.effect
         };
       }
 
-      function getBattleHint(attackerType, defenderType, attackerName, critical = false) {
+      function getBattleHint(attackerType, defenderType, attackerName, critical = false, skillType = "element") {
+        if (skillType === "ram") {
+          return `${attackerName} 使出衝撞，今次唔食屬性加成，純粹撞埋去`;
+        }
         const multiplier = getTypeMultiplier(attackerType, defenderType);
         if (critical && multiplier === 1.5) {
-          return `${attackerName} 屬性剋制，仲打出爆擊，今次總傷害 x3`;
+          return `${attackerName} 屬性剋制，仲打出爆擊，今次總傷害 x2`;
+        }
+        if (critical && multiplier === 1) {
+          return `${attackerName} 屬性平手，但打出爆擊，今次先會用浮動攻擊值 x1.5`;
         }
         if (multiplier === 1.5) return `${attackerName} 屬性剋制，今次攻擊 x1.5`;
+        if (multiplier === 1) return `${attackerName} 屬性平手，今次只會用浮動攻擊值 ±2`;
         if (multiplier === 0.5) return `${attackerName} 被對手剋制，今次攻擊 x0.5`;
         return `${attackerName} 今次屬性平手`;
       }
@@ -3414,7 +4020,7 @@
       function renderBattle() {
         const gym = state.currentGym;
         updateBattleArena(state.opponent.type, state.player.type);
-        progressPanel.textContent = `${gym.name} ・ 第 ${state.questionIndex + 1} 題 ・ 打爆 HP 先過關`;
+        progressPanel.textContent = `${gym.name} ・ 第 ${state.questionIndex + 1} 題 ・ 等待通關`;
         scorePanel.textContent = `徽章 ${state.clearedGyms.length}`;
         correctCount.textContent = String(state.correctCount);
         wrongCount.textContent = String(state.wrongCount);
@@ -3685,16 +4291,47 @@
         }, 430);
       }
 
-      function finishBattle(title, text, canRetry) {
+      function spawnRamImpact(fromPlayer) {
+        effectLayer.innerHTML = "";
+        const layerRect = effectLayer.getBoundingClientRect();
+        const defenderRect = (fromPlayer ? opponentSprite : playerSprite).getBoundingClientRect();
+        const impactPoint = toLayerPoint(defenderRect, layerRect, 0.5, 0.52);
+        const impact = document.createElement("div");
+        impact.className = "effect impact";
+        impact.textContent = "💥";
+        impact.style.setProperty("--ix", px(impactPoint.x));
+        impact.style.setProperty("--iy", px(impactPoint.y));
+        effectLayer.appendChild(impact);
+        setTimeout(() => {
+          effectLayer.innerHTML = "";
+        }, 420);
+      }
+
+      function finishBattle(title, text, canRetry, badgeGym = null, badgeUnlocked = false) {
         if (battleReturnTimer) {
           clearTimeout(battleReturnTimer);
           battleReturnTimer = null;
         }
         resultTitle.textContent = title;
         resultText.textContent = text;
+        if (badgeGym) {
+          const medal = getBadgeInfo(badgeGym.type);
+          const bestRecord = state.bestRecords[badgeGym.id];
+          resultBadgeTitle.textContent = badgeUnlocked ? "新獲得道場徽章" : "道場徽章";
+          resultBadgeStage.innerHTML = createMedalMarkup(badgeGym.type);
+          resultBadgeName.textContent = medal.name;
+          resultBadgeDesc.textContent = badgeUnlocked
+            ? `${badgeGym.name} 已經通關，你收下咗 ${medal.name}。${medal.desc}${bestRecord ? ` 最佳紀錄係答啱 ${bestRecord.correct} 題、答錯 ${bestRecord.wrong} 題。` : ""}`
+            : `你今次再次完成 ${badgeGym.name}。${medal.name} 已經喺你收藏入面。${bestRecord ? ` 目前最佳紀錄係答啱 ${bestRecord.correct} 題、答錯 ${bestRecord.wrong} 題。` : ""}`;
+          resultBadgeWrap.classList.remove("hidden");
+        } else {
+          resultBadgeWrap.classList.add("hidden");
+          resultBadgeStage.innerHTML = "";
+        }
         playAgainBtn.textContent = canRetry ? "再挑戰同一道場" : "返回地圖";
         backToSelectionBtn.textContent = canRetry ? "返回道場地圖" : "重新揀寶可夢";
         showScreen(resultScreen);
+        const returnDelay = badgeGym ? 2600 : 1400;
         battleReturnTimer = setTimeout(() => {
           battleReturnTimer = null;
           if (!state.selectedPokemon) {
@@ -3703,7 +4340,7 @@
           }
           renderMap();
           showScreen(mapScreen);
-        }, 1400);
+        }, returnDelay);
       }
 
       function startGym(gymId) {
@@ -3728,9 +4365,20 @@
         };
         state.opponent = getOpponentFromGym(gym);
         effectLayer.innerHTML = "";
+        opponentSpriteWrap.classList.remove("attack", "charge-prep", "charge", "player", "opponent", "hit", "dodge", "near-faint", "intro-player");
+        playerSpriteWrap.classList.remove("attack", "charge-prep", "charge", "player", "opponent", "hit", "dodge", "near-faint", "intro-player");
         closePokemonModal();
         showScreen(battleScreen, true);
         renderBattle();
+        requestAnimationFrame(() => {
+          playerSpriteWrap.classList.remove("intro-player");
+          requestAnimationFrame(() => {
+            playerSpriteWrap.classList.add("intro-player");
+            setTimeout(() => {
+              playerSpriteWrap.classList.remove("intro-player");
+            }, 1100);
+          });
+        });
       }
 
       function submitAnswer() {
@@ -3740,62 +4388,116 @@
         const isCorrect = state.selectedAnswer === state.currentQuestion.answer;
         const attackerWrap = isCorrect ? playerSpriteWrap : opponentSpriteWrap;
         const defenderWrap = isCorrect ? opponentSpriteWrap : playerSpriteWrap;
+        const fromPlayer = isCorrect;
+        let attackResolveDelay = 760;
+
+        function clearAttackMotion() {
+          attackerWrap.classList.remove("attack", "charge-prep", "charge", "player", "opponent");
+          defenderWrap.classList.remove("hit", "dodge");
+        }
+
+        function runAttackAnimation(attacker, damage, skillType, dodged = false) {
+          clearAttackMotion();
+          if (skillType === "ram") {
+            attackResolveDelay = 920;
+            attackerWrap.classList.add("charge-prep");
+            setTimeout(() => {
+              playAttackSound(attacker.type, "ram");
+              attackerWrap.classList.remove("charge-prep");
+              attackerWrap.classList.add("charge", fromPlayer ? "player" : "opponent");
+            }, 120);
+            setTimeout(() => {
+              if (dodged) {
+                defenderWrap.classList.add("dodge");
+                showMissStamp(defenderWrap);
+              } else {
+                spawnRamImpact(fromPlayer);
+                defenderWrap.classList.add("hit");
+                showDamageStamp(defenderWrap, damage);
+                playHitSound();
+              }
+            }, 430);
+            setTimeout(() => {
+              attackerWrap.classList.remove("charge", "player", "opponent");
+            }, 760);
+            setTimeout(() => {
+              defenderWrap.classList.remove("hit", "dodge");
+            }, 860);
+            return;
+          }
+
+          attackResolveDelay = 760;
+          attackerWrap.classList.add("attack");
+          setTimeout(() => {
+            playAttackSound(attacker.type, "element");
+            spawnEffect(attacker, fromPlayer);
+            if (dodged) {
+              defenderWrap.classList.add("dodge");
+              showMissStamp(defenderWrap);
+            } else {
+              defenderWrap.classList.add("hit");
+              showDamageStamp(defenderWrap, damage);
+              playHitSound();
+            }
+          }, 180);
+          setTimeout(() => attackerWrap.classList.remove("attack"), 420);
+          setTimeout(() => defenderWrap.classList.remove("hit", "dodge"), 760);
+        }
 
         if (isCorrect) {
           state.correctCount += 1;
           const damageResult = getBattleDamageResult(state.player, state.opponent);
-          const { rolledAttack, damage, critical } = damageResult;
+          const { rolledAttack, damage, critical, skillType, skillLabel, dodged, dodgeChance } = damageResult;
           state.opponent.hp = clampHp(state.opponent.hp - damage);
           feedbackBox.className = "feedback good";
-          feedbackBox.textContent = `${state.player.name} 攻擊成功！今次攻擊值 ${rolledAttack}，扣咗 ${damage} HP。${getBattleHint(state.player.type, state.opponent.type, state.player.name, critical)}`;
-          attackerWrap.classList.add("attack");
-          setTimeout(() => {
-            playAttackSound(state.player.type);
-            spawnEffect(state.player, true);
-            defenderWrap.classList.add("hit");
-            showDamageStamp(defenderWrap, damage);
-            playHitSound();
-          }, 180);
-          setTimeout(() => attackerWrap.classList.remove("attack"), 420);
-          setTimeout(() => defenderWrap.classList.remove("hit"), 760);
+          feedbackBox.textContent = dodged
+            ? `${state.player.name} 使出 ${skillLabel}！${state.opponent.name} 成功閃避，今次冇扣到血。${Math.round(dodgeChance * 100)}% 閃避觸發。`
+            : `${state.player.name} 使出 ${skillLabel}！今次攻擊值 ${rolledAttack}，扣咗 ${damage} HP。${getBattleHint(state.player.type, state.opponent.type, state.player.name, critical, skillType)}`;
+          runAttackAnimation(state.player, damage, skillType, dodged);
         } else {
           state.wrongCount += 1;
           const damageResult = getBattleDamageResult(state.opponent, state.player);
-          const { rolledAttack, damage, critical } = damageResult;
+          const { rolledAttack, damage, critical, skillType, skillLabel, dodged, dodgeChance } = damageResult;
           state.player.hp = clampHp(state.player.hp - damage);
           feedbackBox.className = "feedback bad";
-          feedbackBox.textContent = `${state.opponent.name} 反擊成功！今次攻擊值 ${rolledAttack}，扣咗 ${damage} HP。${getBattleHint(state.opponent.type, state.player.type, state.opponent.name, critical)}`;
-          attackerWrap.classList.add("attack");
-          setTimeout(() => {
-            playAttackSound(state.opponent.type);
-            spawnEffect(state.opponent, false);
-            defenderWrap.classList.add("hit");
-            showDamageStamp(defenderWrap, damage);
-            playHitSound();
-          }, 180);
-          setTimeout(() => attackerWrap.classList.remove("attack"), 420);
-          setTimeout(() => defenderWrap.classList.remove("hit"), 760);
+          feedbackBox.textContent = dodged
+            ? `${state.opponent.name} 使出 ${skillLabel}！${state.player.name} 成功閃避，今次冇扣到血。${Math.round(dodgeChance * 100)}% 閃避觸發。`
+            : `${state.opponent.name} 使出 ${skillLabel}！今次攻擊值 ${rolledAttack}，扣咗 ${damage} HP。${getBattleHint(state.opponent.type, state.player.type, state.opponent.name, critical, skillType)}`;
+          runAttackAnimation(state.opponent, damage, skillType, dodged);
         }
 
         feedbackBox.classList.remove("hidden");
 
         if (state.opponent.hp <= 0) {
+          const firstClear = !state.clearedGyms.includes(state.currentGym.id);
           if (!state.clearedGyms.includes(state.currentGym.id)) {
             state.clearedGyms.push(state.currentGym.id);
+            saveClearedGyms();
           }
-          finishBattle("你贏咗！", `${state.player.name} 成功打贏 ${state.currentGym.label}，而家累積 ${state.clearedGyms.length} 個徽章。`, true);
+          updateBestRecord(state.currentGym.id);
+          setTimeout(() => {
+            finishBattle(
+              "你通關啦！",
+              `${state.player.name} 成功完成 ${state.currentGym.label}，而家累積 ${state.clearedGyms.length} 個徽章。`,
+              true,
+              state.currentGym,
+              firstClear
+            );
+          }, attackResolveDelay);
           return;
         }
 
         if (state.player.hp <= 0) {
-          finishBattle("再試一次！", `${state.player.name} 被 ${state.currentGym.label} 擊退咗，返去補一補再戰。`, true);
+          setTimeout(() => {
+            finishBattle("再試一次！", `${state.player.name} 今次未完成 ${state.currentGym.label}，返去休息一下再戰。`, true);
+          }, attackResolveDelay);
           return;
         }
 
         state.questionIndex += 1;
         setTimeout(() => {
           renderBattle();
-        }, 1000);
+        }, Math.max(1000, attackResolveDelay + 120));
       }
 
       function goToMap() {
