@@ -1324,6 +1324,12 @@
         z-index: 2;
         image-rendering: pixelated;
         opacity: 0.96;
+        transition: opacity 0.18s ease, transform 0.18s ease;
+      }
+
+      .arena-pokeball.recall-hidden {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.72);
       }
 
       .arena-pokeball::before {
@@ -1606,6 +1612,72 @@
         animation: introAuraFlash 0.92s ease-out forwards;
       }
 
+      .sprite-wrap.recall-out img {
+        animation: recallShrink 0.38s cubic-bezier(0.24, 0.84, 0.22, 1) forwards;
+        transform-origin: center center;
+        filter:
+          brightness(1.34)
+          saturate(1.2)
+          drop-shadow(0 0 24px rgba(255, 255, 255, 0.78))
+          drop-shadow(0 14px 22px rgba(0, 0, 0, 0.45));
+      }
+
+      .sprite-wrap.recalled img {
+        opacity: 0;
+        transform: scale(0.08);
+      }
+
+      .recall-ball {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 104px;
+        height: 104px;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+        z-index: 8;
+        opacity: 0;
+      }
+
+      .recall-ball.travel {
+        animation: recallBallTravel 0.32s cubic-bezier(0.2, 0.86, 0.16, 1) forwards;
+      }
+
+      .recall-ball.fade-out {
+        animation: recallBallFade 0.24s ease-out forwards;
+      }
+
+      .recall-ball-half {
+        position: absolute;
+        inset: 0;
+        background: url("./assets/pixel-pokeball-red.svg") center / contain no-repeat;
+        image-rendering: pixelated;
+      }
+
+      .recall-ball-top {
+        clip-path: inset(0 0 50% 0);
+      }
+
+      .recall-ball-bottom {
+        clip-path: inset(50% 0 0 0);
+      }
+
+      .recall-ball.open .recall-ball-top {
+        animation: recallBallTopOpen 0.18s ease-out forwards;
+      }
+
+      .recall-ball.open .recall-ball-bottom {
+        animation: recallBallBottomOpen 0.18s ease-out forwards;
+      }
+
+      .recall-ball.close .recall-ball-top {
+        animation: recallBallTopClose 0.18s ease-in forwards;
+      }
+
+      .recall-ball.close .recall-ball-bottom {
+        animation: recallBallBottomClose 0.18s ease-in forwards;
+      }
+
       .damage-stamp {
         position: absolute;
         top: 2px;
@@ -1820,6 +1892,66 @@
         100% {
           opacity: 0;
           transform: translate(-50%, -50%) scale(1.48);
+        }
+      }
+
+      @keyframes recallShrink {
+        0% {
+          opacity: 1;
+          transform: scale(1);
+        }
+        40% {
+          opacity: 1;
+          transform: scale(0.72);
+        }
+        100% {
+          opacity: 0;
+          transform: scale(0.08);
+        }
+      }
+
+      @keyframes recallBallTravel {
+        0% {
+          opacity: 0;
+          transform: translate(calc(var(--sx) - 50%), calc(var(--sy) - 50%)) scale(0.82);
+        }
+        24% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 1;
+          transform: translate(calc(var(--tx) - 50%), calc(var(--ty) - 50%)) scale(1.04);
+        }
+      }
+
+      @keyframes recallBallTopOpen {
+        0% { transform: translateY(0); }
+        100% { transform: translateY(-18px); }
+      }
+
+      @keyframes recallBallBottomOpen {
+        0% { transform: translateY(0); }
+        100% { transform: translateY(18px); }
+      }
+
+      @keyframes recallBallTopClose {
+        0% { transform: translateY(-18px); }
+        100% { transform: translateY(0); }
+      }
+
+      @keyframes recallBallBottomClose {
+        0% { transform: translateY(18px); }
+        100% { transform: translateY(0); }
+      }
+
+      @keyframes recallBallFade {
+        0% {
+          opacity: 1;
+          transform: translate(calc(var(--tx) - 50%), calc(var(--ty) - 50%)) scale(1);
+        }
+        100% {
+          opacity: 0;
+          transform: translate(calc(var(--tx) - 50%), calc(var(--ty) - 50%)) scale(0.56);
         }
       }
 
@@ -3400,6 +3532,7 @@
       const arenaStage = document.querySelector(".arena-stage");
       const arenaTop = document.getElementById("arenaTop");
       const arenaBottom = document.getElementById("arenaBottom");
+      const arenaCenterPokeball = document.querySelector(".arena-pokeball");
 
       const progressPanel = document.getElementById("progressPanel");
       const scorePanel = document.getElementById("scorePanel");
@@ -3811,6 +3944,13 @@
         playTone({ frequency: 132, endFrequency: 82, duration: 0.22, delay: 0.02, type: "square", gain: 0.05 });
         playTone({ frequency: 96, endFrequency: 58, duration: 0.28, delay: 0.07, type: "triangle", gain: 0.034 });
         playNoiseBurst({ duration: 0.08, delay: 0.06, gain: 0.02, lowpass: 520 });
+      }
+
+      function playRecallSound() {
+        playTone({ frequency: 820, endFrequency: 520, duration: 0.16, type: "square", gain: 0.028 });
+        playTone({ frequency: 620, endFrequency: 320, duration: 0.22, delay: 0.06, type: "triangle", gain: 0.024 });
+        playNoiseBurst({ duration: 0.09, delay: 0.14, gain: 0.015, lowpass: 1200 });
+        playTone({ frequency: 260, endFrequency: 210, duration: 0.14, delay: 0.46, type: "sine", gain: 0.018 });
       }
 
       function showDamageStamp(targetWrap, damage) {
@@ -4729,6 +4869,59 @@
         }, 580);
       }
 
+      function playRecallAnimation(targetWrap) {
+        return new Promise((resolve) => {
+          if (!effectLayer || !arenaCenterPokeball || !targetWrap) {
+            resolve();
+            return;
+          }
+
+          const layerRect = effectLayer.getBoundingClientRect();
+          const ballRect = arenaCenterPokeball.getBoundingClientRect();
+          const targetRect = targetWrap.getBoundingClientRect();
+          const start = toLayerPoint(ballRect, layerRect, 0.5, 0.5);
+          const target = toLayerPoint(targetRect, layerRect, 0.5, 0.5);
+
+          effectLayer.innerHTML = "";
+          arenaCenterPokeball.classList.add("recall-hidden");
+
+          const recallBall = document.createElement("div");
+          recallBall.className = "recall-ball travel";
+          recallBall.style.setProperty("--sx", px(start.x));
+          recallBall.style.setProperty("--sy", px(start.y));
+          recallBall.style.setProperty("--tx", px(target.x));
+          recallBall.style.setProperty("--ty", px(target.y));
+          recallBall.innerHTML = `
+            <div class="recall-ball-half recall-ball-top"></div>
+            <div class="recall-ball-half recall-ball-bottom"></div>
+          `;
+          effectLayer.appendChild(recallBall);
+          playRecallSound();
+
+          setTimeout(() => {
+            recallBall.classList.add("open");
+            targetWrap.classList.add("recall-out");
+          }, 300);
+
+          setTimeout(() => {
+            targetWrap.classList.add("recalled");
+            targetWrap.classList.remove("recall-out");
+            recallBall.classList.remove("open");
+            recallBall.classList.add("close");
+          }, 620);
+
+          setTimeout(() => {
+            recallBall.classList.add("fade-out");
+          }, 820);
+
+          setTimeout(() => {
+            effectLayer.innerHTML = "";
+            arenaCenterPokeball.classList.remove("recall-hidden");
+            resolve();
+          }, 1080);
+        });
+      }
+
       function finishBattle(title, text, canRetry, badgeGym = null, badgeUnlocked = false) {
         if (battleReturnTimer) {
           clearTimeout(battleReturnTimer);
@@ -4787,8 +4980,9 @@
         };
         state.opponent = getOpponentFromGym(gym);
         effectLayer.innerHTML = "";
-        opponentSpriteWrap.classList.remove("attack", "charge-prep", "charge", "player", "opponent", "hit", "dodge", "near-faint", "intro-player");
-        playerSpriteWrap.classList.remove("attack", "charge-prep", "charge", "player", "opponent", "hit", "dodge", "near-faint", "intro-player");
+        arenaCenterPokeball?.classList.remove("recall-hidden");
+        opponentSpriteWrap.classList.remove("attack", "charge-prep", "charge", "player", "opponent", "hit", "dodge", "near-faint", "intro-player", "recall-out", "recalled");
+        playerSpriteWrap.classList.remove("attack", "charge-prep", "charge", "player", "opponent", "hit", "dodge", "near-faint", "intro-player", "recall-out", "recalled");
         closePokemonModal();
         showScreen(battleScreen, true);
         renderBattle();
@@ -4898,20 +5092,24 @@
           }
           updateBestRecord(state.currentGym.id);
           setTimeout(() => {
-            finishBattle(
-              "你通關啦！",
-              `${state.player.name} 成功完成 ${state.currentGym.label}，而家累積 ${state.clearedGyms.length} 個徽章。`,
-              true,
-              state.currentGym,
-              firstClear
-            );
+            playRecallAnimation(opponentSpriteWrap).then(() => {
+              finishBattle(
+                "你通關啦！",
+                `${state.player.name} 成功完成 ${state.currentGym.label}，而家累積 ${state.clearedGyms.length} 個徽章。`,
+                true,
+                state.currentGym,
+                firstClear
+              );
+            });
           }, attackResolveDelay);
           return;
         }
 
         if (state.player.hp <= 0) {
           setTimeout(() => {
-            finishBattle("再試一次！", `${state.player.name} 今次未完成 ${state.currentGym.label}，返去休息一下再戰。`, true);
+            playRecallAnimation(playerSpriteWrap).then(() => {
+              finishBattle("再試一次！", `${state.player.name} 今次未完成 ${state.currentGym.label}，返去休息一下再戰。`, true);
+            });
           }, attackResolveDelay);
           return;
         }
