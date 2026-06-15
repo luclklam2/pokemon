@@ -44,6 +44,7 @@
         width: min(100%, 1120px);
         margin: 0 auto;
         padding: 20px 14px 40px;
+        min-height: 100vh;
       }
 
       .hidden {
@@ -1752,9 +1753,9 @@
 
       @keyframes defenderDodge {
         0% { transform: translateX(0) scale(1); }
-        14% { transform: translateX(0) scale(1.1); }
-        38% { transform: translateX(58px) scale(0.92) rotate(3deg); }
-        64% { transform: translateX(-28px) scale(1.04) rotate(-2deg); }
+        14% { transform: translateX(0) scale(1.06); }
+        40% { transform: translateX(var(--dodge-shift, 44px)) scale(0.95) rotate(calc(var(--dodge-turn, 3deg))); }
+        68% { transform: translateX(calc(var(--dodge-shift, 44px) * -0.34)) scale(1.02) rotate(calc(var(--dodge-turn, 3deg) * -0.45)); }
         100% { transform: translateX(0) scale(1); }
       }
 
@@ -1763,40 +1764,40 @@
           transform: scale(1) translateY(0);
         }
         40% {
-          transform: scale(1.18) translateY(-10px);
+          transform: scale(1.12) translateY(-7px);
         }
         100% {
-          transform: scale(1.46) translateY(-18px);
+          transform: scale(1.28) translateY(-12px);
         }
       }
 
       @keyframes ramChargePlayer {
         0% {
-          transform: scale(1.46) translate(0, -18px);
+          transform: scale(1.28) translate(0, -12px);
         }
         18% {
-          transform: scale(1.38) translate(0, -12px);
+          transform: scale(1.22) translate(0, -8px);
         }
         55% {
-          transform: scale(1.14) translate(0, -170px);
+          transform: scale(1.06) translate(0, -148px);
         }
         100% {
-          transform: scale(0.78) translate(0, -338px);
+          transform: scale(0.84) translate(0, -286px);
         }
       }
 
       @keyframes ramChargeOpponent {
         0% {
-          transform: scale(1.46) translate(0, -18px);
+          transform: scale(1.28) translate(0, -12px);
         }
         18% {
-          transform: scale(1.38) translate(0, -12px);
+          transform: scale(1.22) translate(0, -8px);
         }
         55% {
-          transform: scale(1.14) translate(0, 170px);
+          transform: scale(1.06) translate(0, 148px);
         }
         100% {
-          transform: scale(0.78) translate(0, 338px);
+          transform: scale(0.84) translate(0, 286px);
         }
       }
 
@@ -1851,10 +1852,10 @@
           transform: scale(1) translateY(0);
         }
         24% {
-          transform: scale(1.26) translateY(-18px);
+          transform: scale(1.16) translateY(-10px);
         }
         56% {
-          transform: scale(1.18) translateY(-10px);
+          transform: scale(1.1) translateY(-5px);
         }
         100% {
           transform: scale(1) translateY(0);
@@ -2837,7 +2838,8 @@
 
         #playerSpriteWrap {
           align-items: flex-end;
-          padding-bottom: 10px;
+          margin-top: 14px;
+          padding-bottom: 0;
         }
 
         .sprite-wrap img {
@@ -2909,6 +2911,43 @@
         .sound-label,
         .sound-value {
           font-size: 9px;
+        }
+      }
+
+      @media (min-width: 721px) and (max-width: 900px) and (min-height: 1100px) {
+        .app {
+          width: min(100%, 760px);
+          padding-bottom: 8px;
+        }
+
+        .battle-screen {
+          min-height: calc(100vh - 16px);
+        }
+
+        .battle-card {
+          min-height: 620px;
+        }
+
+        .sprite-wrap {
+          min-height: 166px;
+        }
+
+        #opponentSpriteWrap {
+          padding-top: 8px;
+        }
+
+        #playerSpriteWrap {
+          margin-top: 62px;
+          padding-bottom: 0;
+        }
+
+        .fighter.bottom {
+          margin-top: 2px;
+        }
+
+        .question-card {
+          margin-top: auto;
+          padding-bottom: 8px;
         }
       }
 
@@ -3064,6 +3103,21 @@
 
         .sound-controls {
           min-width: 132px;
+        }
+      }
+
+      @media (pointer: coarse) {
+        body,
+        button,
+        .entry-btn,
+        .mini-sprite-card,
+        .ball-card,
+        .gym-card,
+        .choice-btn,
+        .submit-btn,
+        .sound-toggle,
+        .sound-range {
+          cursor: auto !important;
         }
       }
     </style>
@@ -5010,6 +5064,15 @@
         function clearAttackMotion() {
           attackerWrap.classList.remove("attack", "charge-prep", "charge", "player", "opponent");
           defenderWrap.classList.remove("hit", "dodge");
+          defenderWrap.style.removeProperty("--dodge-shift");
+          defenderWrap.style.removeProperty("--dodge-turn");
+        }
+
+        function prepareDodgeMotion(targetWrap) {
+          const move = Math.random() < 0.5 ? -52 : 52;
+          const turn = move < 0 ? "-3deg" : "3deg";
+          targetWrap.style.setProperty("--dodge-shift", `${move}px`);
+          targetWrap.style.setProperty("--dodge-turn", turn);
         }
 
         function runAttackAnimation(attacker, damage, skillType, dodged = false) {
@@ -5024,6 +5087,7 @@
             }, 170);
             setTimeout(() => {
               if (dodged) {
+                prepareDodgeMotion(defenderWrap);
                 defenderWrap.classList.add("dodge");
                 showMissStamp(defenderWrap);
               } else {
@@ -5048,6 +5112,7 @@
             playAttackSound(attacker.type, "element");
             spawnEffect(attacker, fromPlayer);
             if (dodged) {
+              prepareDodgeMotion(defenderWrap);
               defenderWrap.classList.add("dodge");
               showMissStamp(defenderWrap);
             } else {
