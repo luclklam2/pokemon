@@ -111,6 +111,42 @@
         color: #d7def4;
       }
 
+      .lang-dock {
+        position: fixed;
+        top: 14px;
+        right: 14px;
+        z-index: 55;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px;
+        background: rgba(7, 14, 28, 0.92);
+        border: 3px solid rgba(255, 255, 255, 0.82);
+        box-shadow: 0 14px 32px rgba(0, 0, 0, 0.32);
+        backdrop-filter: blur(8px);
+      }
+
+      .lang-btn {
+        min-width: 72px;
+        height: 42px;
+        border: 3px solid #0f1930;
+        background: #e8edf9;
+        color: #08101f;
+        font-size: 15px;
+        font-weight: 900;
+        cursor: pointer;
+        box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.2);
+      }
+
+      .lang-btn.is-active {
+        background: #ffcc29;
+      }
+
+      .lang-btn:disabled {
+        cursor: default;
+        opacity: 1;
+      }
+
       .hero {
         text-align: center;
         margin-bottom: 18px;
@@ -3327,6 +3363,11 @@
       </div>
     </div>
 
+    <div class="lang-dock" aria-label="Language Switch">
+      <button class="lang-btn" id="langZhBtn" type="button" data-lang-target="./index.html">中文</button>
+      <button class="lang-btn is-active" type="button" aria-pressed="true" disabled>EN</button>
+    </div>
+
     <script>
       const typeLabels = {
         water: "Water",
@@ -3538,7 +3579,8 @@
         volume: "pokemon-k2-volume",
         muted: "pokemon-k2-muted",
         clearedGyms: "pokemon-k2-cleared-gyms",
-        bestRecords: "pokemon-k2-best-records"
+        bestRecords: "pokemon-k2-best-records",
+        languageHandoff: "pokemon-k2-language-handoff"
       };
 
       const selectionScreen = document.getElementById("selectionScreen");
@@ -3611,6 +3653,7 @@
       const soundToggleBtn = document.getElementById("soundToggleBtn");
       const soundRange = document.getElementById("soundRange");
       const soundValue = document.getElementById("soundValue");
+      const langZhBtn = document.getElementById("langZhBtn");
 
       function readStoredJson(key, fallback) {
         try {
@@ -3673,6 +3716,67 @@
         state.questionPools = {};
         localStorage.removeItem(storageKeys.clearedGyms);
         localStorage.removeItem(storageKeys.bestRecords);
+        localStorage.removeItem(storageKeys.languageHandoff);
+      }
+
+      function getCurrentScreenId() {
+        if (!coverScreen.classList.contains("hidden")) return "coverScreen";
+        if (!selectionScreen.classList.contains("hidden")) return "selectionScreen";
+        if (!mapScreen.classList.contains("hidden")) return "mapScreen";
+        if (!battleScreen.classList.contains("hidden")) return "battleScreen";
+        if (!resultScreen.classList.contains("hidden")) return "resultScreen";
+        return "coverScreen";
+      }
+
+      function saveLanguageHandoff() {
+        saveStoredJson(storageKeys.languageHandoff, {
+          screenId: getCurrentScreenId(),
+          selectedPokemonId: state.selectedPokemon ? state.selectedPokemon.id : null,
+          currentGymId: state.currentGym ? state.currentGym.id : null,
+          modalOpen: !pokemonModal.classList.contains("hidden")
+        });
+      }
+
+      function restoreLanguageHandoff() {
+        const handoff = readStoredJson(storageKeys.languageHandoff, null);
+        if (!handoff || typeof handoff !== "object") return false;
+        localStorage.removeItem(storageKeys.languageHandoff);
+
+        if (handoff.selectedPokemonId) {
+          const savedPokemon = getPokemonById(handoff.selectedPokemonId);
+          if (savedPokemon) {
+            state.selectedPokemon = savedPokemon;
+          }
+        }
+
+        updateBallRow();
+
+        if (handoff.screenId === "selectionScreen") {
+          showScreen(selectionScreen);
+          if (handoff.modalOpen && state.selectedPokemon) {
+            openPokemonModal(state.selectedPokemon);
+          }
+          return true;
+        }
+
+        if (handoff.screenId === "mapScreen" && state.selectedPokemon) {
+          renderMap();
+          showScreen(mapScreen);
+          return true;
+        }
+
+        if ((handoff.screenId === "battleScreen" || handoff.screenId === "resultScreen") && state.selectedPokemon) {
+          renderMap();
+          showScreen(mapScreen);
+          return true;
+        }
+
+        return false;
+      }
+
+      function switchLanguage(targetPath) {
+        saveLanguageHandoff();
+        window.location.href = targetPath;
       }
 
       function isBetterRecord(nextRecord, currentRecord) {
@@ -5262,7 +5366,9 @@
 
       updateBallRow();
       applyAudioLevels();
-      showScreen(coverScreen);
+      if (!restoreLanguageHandoff()) {
+        showScreen(coverScreen);
+      }
 
       document.addEventListener("pointerdown", playCurrentMusic, { once: true });
 
@@ -5283,6 +5389,7 @@
         applyAudioLevels();
         saveAudioSettings();
       });
+      langZhBtn.addEventListener("click", () => switchLanguage(langZhBtn.dataset.langTarget));
       startAdventureBtn.addEventListener("click", goToMap);
       closeModalBtn.addEventListener("click", closePokemonModal);
       chooseAnotherBtn.addEventListener("click", closePokemonModal);
