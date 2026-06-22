@@ -147,6 +147,16 @@
         opacity: 1;
       }
 
+      .fit-host {
+        position: relative;
+        min-height: 0 !important;
+        overflow: hidden;
+      }
+
+      .fit-target {
+        will-change: transform;
+      }
+
       .hero {
         text-align: center;
         margin-bottom: 18px;
@@ -265,6 +275,11 @@
 
       .selection-shell {
         padding: 26px 20px 28px;
+      }
+
+      .screen-fit-group {
+        display: grid;
+        gap: 0;
       }
 
       .selection-layout {
@@ -2786,6 +2801,19 @@
         .sound-controls {
           min-width: 126px;
         }
+
+        .lang-dock {
+          top: 12px;
+          right: 12px;
+          gap: 4px;
+          padding: 6px;
+        }
+
+        .lang-btn {
+          min-width: 58px;
+          height: 36px;
+          font-size: 13px;
+        }
       }
 
       @media (min-width: 721px) and (max-width: 900px) and (min-height: 900px) {
@@ -2947,6 +2975,19 @@
         .sound-label,
         .sound-value {
           font-size: 9px;
+        }
+
+        .lang-dock {
+          top: 6px;
+          right: 6px;
+          gap: 4px;
+          padding: 4px;
+        }
+
+        .lang-btn {
+          min-width: 50px;
+          height: 30px;
+          font-size: 12px;
         }
       }
 
@@ -3174,77 +3215,81 @@
       </section>
 
       <section id="selectionScreen">
-        <div class="hero">
-          <h1>大木博士研究所</h1>
-          <p>先揀一隻寶可夢，再開始冒險</p>
-          <small>撳下面精靈球去揀拍檔，揀完先可以入地圖</small>
-        </div>
+        <div class="screen-fit-group">
+          <div class="hero">
+            <h1>大木博士研究所</h1>
+            <p>先揀一隻寶可夢，再開始冒險</p>
+            <small>撳下面精靈球去揀拍檔，揀完先可以入地圖</small>
+          </div>
 
-        <div class="panel selection-shell">
-          <div class="selection-layout">
-            <div class="top-row">
-              <div class="mini-sprite-card"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png" alt="傑尼龜"></div>
-              <div class="mini-sprite-card"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png" alt="小火龍"></div>
-              <div class="mini-sprite-card"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png" alt="妙蛙種子"></div>
-            </div>
-
-            <div class="oak-card">
-              <img src="./assets/professor-oak.png" alt="大木博士">
-              <div class="oak-copy">
-                <div class="label">PROF OAK</div>
-                <div class="name">大木博士</div>
-                <div class="line">Every journey begins with a choice.<br>撳下面去揀精靈球，打開精靈球揀你第一隻夥伴。</div>
+          <div class="panel selection-shell">
+            <div class="selection-layout">
+              <div class="top-row">
+                <div class="mini-sprite-card"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png" alt="傑尼龜"></div>
+                <div class="mini-sprite-card"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png" alt="小火龍"></div>
+                <div class="mini-sprite-card"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png" alt="妙蛙種子"></div>
               </div>
-            </div>
 
-            <div class="selection-guide">
-              <strong>第 1 步：按下面任何一個精靈球</strong>
-              <span>揀咗寶可夢之後，先會開放「進入道場地圖」。</span>
-            </div>
+              <div class="oak-card">
+                <img src="./assets/professor-oak.png" alt="大木博士">
+                <div class="oak-copy">
+                  <div class="label">PROF OAK</div>
+                  <div class="name">大木博士</div>
+                  <div class="line">Every journey begins with a choice.<br>撳下面去揀精靈球，打開精靈球揀你第一隻夥伴。</div>
+                </div>
+              </div>
 
-            <div class="ball-row" id="ballRow"></div>
+              <div class="selection-guide">
+                <strong>第 1 步：按下面任何一個精靈球</strong>
+                <span>揀咗寶可夢之後，先會開放「進入道場地圖」。</span>
+              </div>
 
-            <div class="actions">
-              <button class="primary-btn" id="startAdventureBtn" disabled>請先按下面精靈球揀寶可夢</button>
+              <div class="ball-row" id="ballRow"></div>
+
+              <div class="actions">
+                <button class="primary-btn" id="startAdventureBtn" disabled>請先按下面精靈球揀寶可夢</button>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       <section id="mapScreen" class="hidden">
-        <div class="hero">
-          <h1>道場地圖</h1>
-          <p>揀一個道場，開始你嘅屬性挑戰</p>
-          <small>總共 6 個道場位，最後一個位置暫時待更新</small>
-        </div>
+        <div class="screen-fit-group">
+          <div class="hero">
+            <h1>道場地圖</h1>
+            <p>揀一個道場，開始你嘅屬性挑戰</p>
+            <small>總共 6 個道場位，最後一個位置暫時待更新</small>
+          </div>
 
-        <div class="panel map-shell">
-          <div class="map-header">
-            <div class="trainer-chip">
-              <img id="mapPokemonSprite" src="" alt="你的寶可夢">
-              <div>
-                <strong id="mapPokemonName">比卡超</strong>
-                <span id="mapPokemonMeta">電擊鼠 ・ HP 80 ・ 攻擊 24</span>
+          <div class="panel map-shell">
+            <div class="map-header">
+              <div class="trainer-chip">
+                <img id="mapPokemonSprite" src="" alt="你的寶可夢">
+                <div>
+                  <strong id="mapPokemonName">比卡超</strong>
+                  <span id="mapPokemonMeta">電擊鼠 ・ HP 80 ・ 攻擊 24</span>
+                </div>
+              </div>
+              <div class="map-actions">
+                <button class="secondary-btn" id="changePokemonBtn" style="width:auto; min-width: 180px;">重新揀寶可夢</button>
+                <button class="secondary-btn danger-btn" id="resetRecordsBtn" style="width:auto; min-width: 180px;">重設紀錄</button>
               </div>
             </div>
-            <div class="map-actions">
-              <button class="secondary-btn" id="changePokemonBtn" style="width:auto; min-width: 180px;">重新揀寶可夢</button>
-              <button class="secondary-btn danger-btn" id="resetRecordsBtn" style="width:auto; min-width: 180px;">重設紀錄</button>
+
+            <div class="map-summary">
+              <div class="summary-pill" id="gymCountPill">已開放 5 / 6 道場</div>
+              <div class="summary-pill" id="badgeCountPill">已贏 0 個道場</div>
             </div>
-          </div>
 
-          <div class="map-summary">
-            <div class="summary-pill" id="gymCountPill">已開放 5 / 6 道場</div>
-            <div class="summary-pill" id="badgeCountPill">已贏 0 個道場</div>
-          </div>
+            <div class="badge-gallery" id="badgeGallery"></div>
 
-          <div class="badge-gallery" id="badgeGallery"></div>
+            <div class="gym-grid" id="gymGrid"></div>
 
-          <div class="gym-grid" id="gymGrid"></div>
-
-          <div class="type-strip">
-            <div class="type-note">火 克 木，木 克 水，水 克 電，電 克 暗，暗 克 火。</div>
-            <div class="type-note">屬性剋制時：攻擊 x1.5，另有 5% 機會爆擊到 x2。屬性平手：平時只會用攻擊值浮動 ±2，另外 5% 機會爆擊到 x1.5。被剋制時：攻擊 x0.5。</div>
+            <div class="type-strip">
+              <div class="type-note">火 克 木，木 克 水，水 克 電，電 克 暗，暗 克 火。</div>
+              <div class="type-note">屬性剋制時：攻擊 x1.5，另有 5% 機會爆擊到 x2。屬性平手：平時只會用攻擊值浮動 ±2，另外 5% 機會爆擊到 x1.5。被剋制時：攻擊 x0.5。</div>
+            </div>
           </div>
         </div>
       </section>
@@ -3833,11 +3878,15 @@
       }
 
       const musicPlayers = {
+        cover: new Audio("./assets/audio/cover-bgm.ogg"),
+        selection: new Audio("./assets/audio/selection-bgm.ogg"),
         ui: new Audio("./assets/audio/ui-bgm.ogg"),
         battle: new Audio("./assets/audio/battle-bgm.ogg")
       };
       const uiSelectSound = new Audio("./assets/audio/menu-select.wav");
       const baseMediaVolumes = {
+        cover: 0.2,
+        selection: 0.19,
         ui: 0.24,
         battle: 0.06
       };
@@ -3873,14 +3922,24 @@
 
       function applyAudioLevels() {
         const effective = getEffectiveVolume();
+        const resolvedCoverVolume = baseMediaVolumes.cover * effective;
+        const resolvedSelectionVolume = baseMediaVolumes.selection * effective;
         const resolvedUiVolume = baseMediaVolumes.ui * effective;
         const resolvedBattleVolume = baseMediaVolumes.battle * effective;
         const resolvedUiSelectVolume = baseUiSelectVolume * effective;
 
+        musicPlayers.cover.volume = resolvedCoverVolume;
+        musicPlayers.selection.volume = resolvedSelectionVolume;
         musicPlayers.ui.volume = resolvedUiVolume;
         musicPlayers.battle.volume = resolvedBattleVolume;
         uiSelectSound.volume = resolvedUiSelectVolume;
 
+        if (mediaGainNodes.cover && audioContext) {
+          mediaGainNodes.cover.gain.setValueAtTime(Math.max(0.0001, resolvedCoverVolume), audioContext.currentTime);
+        }
+        if (mediaGainNodes.selection && audioContext) {
+          mediaGainNodes.selection.gain.setValueAtTime(Math.max(0.0001, resolvedSelectionVolume), audioContext.currentTime);
+        }
         if (mediaGainNodes.ui && audioContext) {
           mediaGainNodes.ui.gain.setValueAtTime(Math.max(0.0001, resolvedUiVolume), audioContext.currentTime);
         }
@@ -3908,7 +3967,9 @@
       }
 
       function getMusicKeyForScreen(screen) {
-        if (screen === coverScreen || screen === selectionScreen || screen === mapScreen) return "ui";
+        if (screen === coverScreen) return "cover";
+        if (screen === selectionScreen) return "selection";
+        if (screen === mapScreen || screen === resultScreen) return "ui";
         if (screen === battleScreen) return "battle";
         return null;
       }
@@ -3967,6 +4028,8 @@
         }
         if (!audioRoutingReady) {
           [
+            ["cover", musicPlayers.cover, musicBusGain],
+            ["selection", musicPlayers.selection, musicBusGain],
             ["ui", musicPlayers.ui, musicBusGain],
             ["battle", musicPlayers.battle, musicBusGain],
             ["uiSelect", uiSelectSound, sfxBusGain]
@@ -4500,6 +4563,81 @@
         screen.classList.remove("hidden");
         refreshNearFaintAlarm();
         syncScreenMusic(screen, forceMusicRestart);
+        scheduleViewportFit();
+      }
+
+      const screenFitTargets = {
+        coverScreen: document.querySelector("#coverScreen .cover-screen"),
+        selectionScreen: document.querySelector("#selectionScreen .screen-fit-group"),
+        mapScreen: document.querySelector("#mapScreen .screen-fit-group"),
+        battleScreen: document.querySelector("#battleScreen .battle-screen"),
+        resultScreen: document.querySelector("#resultScreen .result-card")
+      };
+      let viewportFitFrame = 0;
+
+      function shouldUseViewportFit() {
+        return window.innerWidth >= 720 && window.innerWidth <= 1180 && window.innerHeight <= 1280;
+      }
+
+      function resetViewportFit() {
+        Object.entries(screenFitTargets).forEach(([screenId, target]) => {
+          const screen = document.getElementById(screenId);
+          if (!screen || !target) return;
+          screen.classList.remove("fit-host");
+          screen.style.height = "";
+          target.classList.remove("fit-target");
+          target.style.position = "";
+          target.style.left = "";
+          target.style.top = "";
+          target.style.width = "";
+          target.style.maxWidth = "";
+          target.style.transform = "";
+          target.style.transformOrigin = "";
+        });
+      }
+
+      function applyViewportFit() {
+        resetViewportFit();
+        if (!shouldUseViewportFit()) return;
+
+        const activeId = getCurrentScreenId();
+        const activeScreen = document.getElementById(activeId);
+        const target = screenFitTargets[activeId];
+        if (!activeScreen || !target) return;
+
+        const edgePadding = window.innerWidth <= 900 ? 10 : 16;
+        const appShell = document.querySelector(".app");
+        const appStyles = appShell ? getComputedStyle(appShell) : null;
+        const bottomSafeSpace = appStyles ? parseFloat(appStyles.paddingBottom) || 0 : edgePadding;
+        const screenTop = activeScreen.getBoundingClientRect().top;
+        const availableWidth = Math.max(320, window.innerWidth - edgePadding * 2);
+        const availableHeight = Math.max(360, window.innerHeight - screenTop - bottomSafeSpace);
+        const rect = target.getBoundingClientRect();
+        if (!rect.width || !rect.height) return;
+
+        const scale = Math.min(1, availableWidth / rect.width, availableHeight / rect.height);
+
+        activeScreen.classList.add("fit-host");
+        activeScreen.style.height = `${Math.floor(availableHeight)}px`;
+        target.classList.add("fit-target");
+        target.style.position = "absolute";
+        target.style.left = "50%";
+        target.style.top = "0";
+        target.style.width = `${Math.round(rect.width)}px`;
+        target.style.maxWidth = "none";
+        target.style.transformOrigin = "top center";
+        target.style.transform = `translateX(-50%) scale(${scale})`;
+      }
+
+      function scheduleViewportFit() {
+        if (viewportFitFrame) {
+          cancelAnimationFrame(viewportFitFrame);
+        }
+        viewportFitFrame = requestAnimationFrame(() => {
+          applyViewportFit();
+          setTimeout(applyViewportFit, 70);
+          setTimeout(applyViewportFit, 180);
+        });
       }
 
       function updateBallRow() {
@@ -4526,10 +4664,12 @@
         startAdventureBtn.disabled = false;
         startAdventureBtn.textContent = "進入道場地圖";
         updateBallRow();
+        scheduleViewportFit();
       }
 
       function closePokemonModal() {
         pokemonModal.classList.add("hidden");
+        scheduleViewportFit();
       }
 
       function renderMap() {
@@ -4573,6 +4713,7 @@
           }
           gymGrid.appendChild(card);
         });
+        scheduleViewportFit();
       }
 
       function getBadgeInfo(gymType) {
@@ -4798,6 +4939,7 @@
 
         syncBattleArena();
         renderQuestion();
+        scheduleViewportFit();
       }
 
       function renderQuestion() {
@@ -4833,6 +4975,7 @@
           });
           choices.appendChild(button);
         });
+        scheduleViewportFit();
       }
 
       function toLayerPoint(rect, layerRect, anchorX = 0.5, anchorY = 0.5) {
@@ -5137,6 +5280,7 @@
         playAgainBtn.textContent = canRetry ? "再挑戰同一道場" : "返回地圖";
         backToSelectionBtn.textContent = canRetry ? "返回道場地圖" : "重新揀寶可夢";
         showScreen(resultScreen);
+        scheduleViewportFit();
         const returnDelay = badgeGym ? 2600 : 1400;
         battleReturnTimer = setTimeout(() => {
           battleReturnTimer = null;
@@ -5415,6 +5559,8 @@
       pokemonModal.addEventListener("click", (event) => {
         if (event.target === pokemonModal) closePokemonModal();
       });
+      window.addEventListener("resize", scheduleViewportFit);
+      window.addEventListener("orientationchange", scheduleViewportFit);
     </script>
   </body>
 </html>
